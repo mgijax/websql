@@ -7,8 +7,8 @@ DBUSER		mgd_public
 # database password
 DBPASSWORD	mgdpub
 
-# path to a directory containing the database library (a WI is a good source)
-DBDIR		/home/jsb/work/wi/lib/python/
+# path to a directory containing the database library
+DBDIR		/usr/local/mgi/lib/python/
 
 # name of the server:database mapping file
 MAPFILE		dbmap.txt
@@ -19,3 +19,9 @@ WIDTH		70
 
 # unix group used for web access
 GROUP		www
+
+# path to the Sybase directory
+SYBASE		/opt/sybase/12.5
+
+# path to Sybase's library directories
+LD_LIBRARY_PATH	/opt/teleuseXRT/lib:/opt/teleuseXRT/conf/lib:/opt/sybase/12.5/ASE-12_5/lib:/opt/sybase/12.5/OCS-12_5/lib:/usr/openwin/lib:/usr/lib:/usr/ucblib
