@@ -190,12 +190,30 @@ class Table:
 		return string.join (lines, '\n')
 
 class Traceback:
-	def __init__ (self, tb):
+	def __init__ (self, tb, tracebackType = None, tracebackValue = None):
 		self.traceback = tb
+		self.tracebackType = tracebackType
+		self.tracebackValue = tracebackValue
 		return
 
 	def html (self):
-		lines = [ 'Error.  Traceback follows...<P>',
+		lines = [ 'Error.  Traceback follows...<P>', ]
+
+		needP = 0
+
+		if self.tracebackType:
+			needP = 1
+			lines.append ("<B>Exception type:</B> %s<BR>" % \
+				self.tracebackType)
+		if self.tracebackValue:
+			needP = 1
+			lines.append ("<B>Exception value:</B> %s<BR>" % \
+				self.tracebackValue)
+
+		if needP == 1:
+			lines.append ("<P>")
+
+		lines = lines + [
 			'<TABLE border=1>',
 			'<TR><TH>File<TH>Line #<TH>Function<TH>Line'
 			]
@@ -206,6 +224,21 @@ class Traceback:
 
 	def text (self):
 		lines = [ 'Error. Traceback follows...\n\n' ]
+
+		needP = 0
+
+		if self.tracebackType:
+			needP = 1
+			lines.append ("Exception type: %s" % \
+				self.tracebackType)
+		if self.tracebackValue:
+			needP = 1
+			lines.append ("Exception value: %s" % \
+				self.tracebackValue)
+
+		if needP == 1:
+			lines.append ("\n")
+
 		for (file, line, fn, text) in self.traceback:
 			lines.append ('File:     %s' % file)
 			lines.append ('Line #:   %d' % line)
@@ -252,9 +285,13 @@ def results (parms):
 		parms['server'], parms['database'])
 	queries = string.split (parms['sql'], '||')
 	try:
-		resultsets = db.sql (queries, 'auto')
+		if queries != ['']:
+			resultsets = db.sql (queries, 'auto')
+		else:
+			resultsets = []
 	except:
-		tb = Traceback (traceback.extract_tb (sys.exc_traceback))
+		tb = Traceback (traceback.extract_tb (sys.exc_traceback),
+			sys.exc_type, sys.exc_value)
 		if FORMAT == HTML:
 			return tb.html()
 		elif FORMAT == TAB:
