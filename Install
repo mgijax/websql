@@ -1,0 +1,62 @@
+#!/bin/sh
+
+# variable definitions (edit as needed)
+
+CONFIGURATION=Configuration
+
+# ensure that the config file exists
+
+if test ! -r $CONFIGURATION
+then
+	echo "Missing configuration file.  Please create $CONFIGURATION."
+	exit 1
+fi
+
+# read variables from the config file
+
+exec 4<&0
+exec < $CONFIGURATION
+while read name value junk
+do
+	case "$name" in
+		PYTHON)
+			PYTHON=$value;;
+		GROUP)
+			GROUP=$value;;
+		MAPFILE)
+			MAPFILE=$value;;
+		[A-z]*)
+			;;	# other parms are not needed by Install
+	esac
+done
+exec 0<&4
+
+# protect files from world access
+
+chmod o-rwx *
+
+# make Python link
+
+if [ -h python ]; then
+	rm python
+fi
+echo "Linking to python"
+ln -s $PYTHON python
+
+# compile python libraries and make sure they're readable
+
+echo "Compiling libraries"
+rm *pyc
+$PYTHON -c 'import compileall; compileall.compile_dir(".")'
+$PYTHON -c 'import config'
+
+# set permissions for group to read & execute
+
+echo "Setting permissions"
+chgrp $GROUP *pyc *cgi $MAPFILE
+chmod 750 *pyc *cgi $MAPFILE
+
+# make sure the pickled configuration file is writeable by the right group
+
+chmod 770 *pkl
+chgrp $GROUP *pkl

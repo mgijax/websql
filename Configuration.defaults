@@ -1,0 +1,21 @@
+# full path to the python interpreter
+PYTHON		/usr/local/bin/python
+
+# name of the database user
+DBUSER		mgd_public
+
+# database password
+DBPASSWORD	mgdpub
+
+# path to a directory containing the database library (a WI is a good source)
+DBDIR		/home/jsb/work/wi/lib/python/
+
+# name of the server:database mapping file
+MAPFILE		dbmap.txt
+
+# size of the text entry window
+HEIGHT		10
+WIDTH		70
+
+# unix group used for web access
+GROUP		www
