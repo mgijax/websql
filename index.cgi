@@ -344,14 +344,15 @@ title = 'websql %s' % VERSION
 header = '<HTML><HEAD><TITLE>%s</TITLE></HEAD><BODY><H3>%s</H3>' % \
 	(title, title)
 footer = '</BODY></HTML>'
-
 if __name__ == '__main__':
-
 	subnet = os.environ['REMOTE_ADDR'][0:10]
-	if subnet not in [ '192.233.43', '192.233.41' ]:
+	subnetNew = os.environ['REMOTE_ADDR'][0:11] 
+	if subnet not in [ '192.233.43', '192.233.41'] and \
+	    subnetNew != '209.222.209':
 		print 'Content-type: text/html\n'
 		print header
 		print 'Permission denied.  You need to be in the Jax domain'
+		print '<BR>Subnet: %s' % subnet
 		print footer
 		sys.exit (0)
 
