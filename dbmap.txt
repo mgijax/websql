@@ -4,8 +4,7 @@
 # indicate the default server:database combination by putting a '*' before
 # the desired database.
 
-MGD: mgd wts nomen strains
-MGD_DEV: mgd_release mgi_release mgd wts mgd_new
-MGD_DEV: nomen nomen_dev strains strains_dev
-MGD_PUBLIC: pub_1 pub_2
-MGD_PUB_SERVER: *mgd
+PROD_MGI: *mgd nomen wts
+DEV_MGI: mgd nomen wts mgd_release nomen_release wts_release
+PUB_MGI: pub_1 pub2
+ADHOC_MGI: mgd
