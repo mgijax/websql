@@ -8,7 +8,7 @@ DBUSER		mgd_public
 DBPASSWORD	mgdpub
 
 # path to a directory containing the database library
-DBDIR		/usr/local/mgi/lib/python/
+DBDIR		/usr/local/mgi/live/lib/python/
 
 # name of the server:database mapping file
 MAPFILE		dbmap.txt
@@ -24,4 +24,4 @@ GROUP		www
 SYBASE		/opt/sybase/12.5
 
 # path to Sybase's library directories
-LD_LIBRARY_PATH	/opt/teleuseXRT/lib:/opt/teleuseXRT/conf/lib:/opt/sybase/12.5/ASE-12_5/lib:/opt/sybase/12.5/OCS-12_5/lib:/usr/openwin/lib:/usr/lib:/usr/ucblib
+LD_LIBRARY_PATH	/opt/teleuseXRT/lib:/opt/teleuseXRT/conf/lib:/opt/sybase/12.5/ASE-12_5/lib:/opt/sybase/12.5/OCS-12_5/lib:/usr/openwin/lib:/usr/lib:/usr/ucblib:/usr/local/lib
