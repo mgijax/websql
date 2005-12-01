@@ -1,6 +1,13 @@
+TAG: websql-tr7193-BP
+DATE: 12/01/2005
+STAFF: jsb
+RELEASE: alpha
+CHANGES:
+1) branch-point tag for Python upgrade
+
 TAG: websql-1-0-2
 DATE: 09/25/2003
 STAFF: sc
 RELEASE: Prime-time
 CHANGES:
-Added new subnet IP address to index.cgi
+1) Added new subnet IP address to index.cgi
