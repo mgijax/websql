@@ -1,3 +1,10 @@
+TAG: websql-tr7193-1
+DATE: 12/01/2005
+STAFF: jsb
+RELEASE: alpha
+CHANGES:
+1) includes necessary updates to run under Python 2.4.2
+
 TAG: websql-tr7193-BP
 DATE: 12/01/2005
 STAFF: jsb
