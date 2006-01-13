@@ -23,6 +23,8 @@ do
 			PYTHON=$value;;
 		GROUP)
 			GROUP=$value;;
+		DBDIR)
+			DBDIR=$value;;
 		MAPFILE)
 			MAPFILE=$value;;
 		[A-z]*)
@@ -42,6 +44,10 @@ if [ -h python ]; then
 fi
 echo "Linking to python"
 ln -s $PYTHON python
+
+echo $DBDIR > library.path
+chmod 660 library.path
+chgrp $GROUP library.path
 
 # compile python libraries and make sure they're readable
 

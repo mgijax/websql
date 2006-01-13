@@ -19,9 +19,24 @@
 
 import os
 import sys
+import string
+
+# if possible, find the standard MGI libraries and import the module that
+# turns off deprecation errors
+
+try:
+	fp = open('library.path', 'r')
+	line = fp.readline()
+	fp.close()
+
+	sys.path.append (string.strip (line))
+
+	import ignoreDeprecation
+except:
+	pass
+
 import regex
 import pickle
-import string
 
 def find_path (
 	s = 'Configuration',	# string pathname for which we're looking
