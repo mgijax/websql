@@ -16,6 +16,7 @@ import config
 import Pulldowns
 import ServerMap
 import db
+import time
 
 VERSION = '1.0'
 
@@ -29,6 +30,16 @@ parms = { 'database' : 'mgd_release',
 	'sql' : '',
 	'format' : 'html',
 	}
+
+TIME = time.time()
+
+def resetTime ():
+	global TIME
+	TIME = time.time()
+	return
+
+def elapsedTime ():
+	return time.time() - TIME
 
 def alternate (s):
 	# for fieldname 's', return the portion to the right of a '.', or just
@@ -110,8 +121,7 @@ class Table:
 		if len(self.rows) == 0:
 			return ''
 
-		lines = [ '%d records returned' % len (self.rows),
-			'<TABLE border=1>' ]
+		lines = [ '<TABLE border=1>' ]
 
 		s = '<TR><TH>Row #'
 		for col in self.cols:
@@ -283,48 +293,59 @@ def form (parms, pulldowns):
 def results (parms):
 	db.set_sqlLogin (config.lookup('DBUSER'), config.lookup('DBPASSWORD'),
 		parms['server'], parms['database'])
-	queries = string.split (parms['sql'], '||')
-	try:
-		if queries != ['']:
-			resultsets = db.sql (queries, 'auto')
-		else:
-			resultsets = []
-	except:
-		tb = Traceback (traceback.extract_tb (sys.exc_traceback),
-			sys.exc_type, sys.exc_value)
-		if FORMAT == HTML:
-			return tb.html()
-		elif FORMAT == TAB:
-			return tb.text()
-		else:
-			return tb.text()
+	db.useOneConnection(1)
 
+	i = 0
 	list = []
-	for i in range (0, len(resultsets)):
+	queries = string.split (parms['sql'], '||')
+	if len(queries) == 1 and queries[0] == '':
+		queries = []
+
+	for query in queries:
+	    i = i + 1
+	    try:
+		title = 'Result Set %d' % i
+		half = (78 - len(title)) / 2
+
+		cmds = [ 'SQL command:' ] + string.split(query.strip(), '\n')
 
 		if FORMAT == HTML:
-			list.append ('<HR>Result Set %d<P>' % (i + 1))
-			list.append (Table (queries[i], resultsets[i]).html())
+			list.append ('<HR>%s<BR>' % title)
+			list.append ('<PRE>%s</PRE>' % '\n'.join(cmds))
+		else:
+			list.append ('=' * half + title + '=' * (78 - half))
+			list = list + cmds
+			list.append ('')
+
+		resetTime()
+		results = db.sql (query, 'auto')
+		stats = '%d rows returned, %4.3f seconds' % (len(results),
+				elapsedTime())
+
+		if FORMAT == HTML:
+			list.append ('<FONT SIZE="-1">%s</FONT><P>' % stats)
+			list.append (Table (query, results).html())
 
 		elif FORMAT == TAB:
-			title = 'Result Set %d' % (i + 1)
-			half = (78 - len(title)) / 2
-			list.append ('=' * half + title + '=' * (78 - half))
-			list = list + map (lambda s : 'SQL: %s' % s,
-				string.split (string.strip(queries[i]), '\n'))
+			list.append (stats)
 			list.append ('')
-			list.append (Table (queries[i], resultsets[i]).tab())
+			list.append (Table (query, results).tab())
 
 		elif FORMAT == TEXT:
-			title = 'Result Set %d' % (i + 1)
-			half = (78 - len(title)) / 2
-			list.append ('=' * half + title + '=' * (78 - half))
-			list = list + map (lambda s : 'SQL: %s' % s,
-				string.split (string.strip(queries[i]), '\n'))
+			list.append (stats)
 			list.append ('')
-			list.append (Table (queries[i], resultsets[i]).text())
+			list.append (Table (query, results).text())
+	    except:
+		tb = Traceback (traceback.extract_tb (sys.exc_traceback),
+					sys.exc_type, sys.exc_value)
+		if FORMAT == HTML:
+			list.append (tb.html())
+		else:
+			list.append (tb.text())
 
-	return string.join (list, '\n')
+		return '\n'.join (list)
+
+	return '\n'.join (list)
 
 def process_parms ():
 	global parms, FORMAT
