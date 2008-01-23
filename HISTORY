@@ -1,3 +1,10 @@
+TAG: websql-3-5-4-0
+DATE: 01/23/2008
+STAFF: jsb
+RELEASE: beta
+CHANGES:
+1) added viewStats.cgi and viewPerms.cgi scripts
+
 TAG: websql-3-5-3-0
 DATE: 06/06/2007
 STAFF: jsb
