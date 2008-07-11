@@ -366,9 +366,9 @@ header = '<HTML><HEAD><TITLE>%s</TITLE></HEAD><BODY><H3>%s</H3>' % \
 	(title, title)
 footer = '</BODY></HTML>'
 if __name__ == '__main__':
-	subnet = os.environ['REMOTE_ADDR'][0:10]
+	subnet = os.environ['REMOTE_ADDR'][0:8]
 	subnetNew = os.environ['REMOTE_ADDR'][0:11] 
-	if subnet not in [ '192.233.43', '192.233.41'] and \
+	if subnet not in [ '10.150.1', '10.160.1'] and \
 	    subnetNew != '209.222.209':
 		print 'Content-type: text/html\n'
 		print header
