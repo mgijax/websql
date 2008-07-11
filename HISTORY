@@ -1,3 +1,11 @@
+TAG: websql-4-1-0-1
+DATE: 07/11/2008
+STAFF: dbm
+RELEASE:
+CHANGES:
+1) Updated IP address in index.cgi
+2) Updated database names in dbmap.txt
+
 TAG: websql-3-5-4-0
 DATE: 01/23/2008
 STAFF: jsb
