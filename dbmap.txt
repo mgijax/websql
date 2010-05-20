@@ -4,13 +4,11 @@
 # indicate the default server:database combination by putting a '*' before
 # the desired database.
 
-ADHOC_MGI: mgd radar
-DEV_MGI: imsr imsr2 mgd mgd_dbm mgd_lec qatest1 radar radar_dbm radar_dow snp wts
-DEV1_MGI: imsr mgd_lec1 mgd_sc1 mgd_test mgd_wi1 mgd_wi2 radar_1 radar_2 radar_test snp_1
-DEV2_MGI: imsr mgd mgd_old qatest2 radar radar_old snp
-DEV_SNP: snp_2
-DEV1_SNP: mgd snp
-PROD_MGI: imsr *mgd radar snp wts
-PROD1_MGI: mgd snp
+ADHOC_MGI: imsr mgd radar
+DEV_MGI: mgd mgd_dbm mgd_lec radar radar_dbm radar_dow snp wts
+DEV1_MGI: imsr mgd_lec1 mgd_sc1 mgd_test mgd_wi1 mgd_wi2 radar_1 radar_2 radar_test snp_test
+DEV1_SNP: mgd_be snp_be snp_dev_be
+DEV2_MGI: imsr mgd mgd_old radar radar_old snp
+PROD1_MGI: imsr *mgd mgd_be radar snp snp_be wts
 PUB_MGI: imsr pub_1 pub_2 radar snp_1 snp_2
-BOT_MGI: mgd radar snp
+BOT_MGI: imsr mgd radar snp
