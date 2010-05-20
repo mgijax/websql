@@ -11,13 +11,13 @@ import CGI
 import stats
 
 databases = {
-	'shire'		: ('PROD_MGI', 'mgd'),
+	'lindon'	: ('PROD1_MGI', 'mgd'),
 	'rohan'		: ('DEV_MGI', 'mgd'),
 	'firien'	: ('DEV2_MGI', 'mgd'),
 	'jsb'		: ('DEV_MGI', 'mgd_lec'),
 	'dev1'		: ('DEV1_MGI', 'mgd_wi1'),
 	}
-defaultDbKey = 'shire'
+defaultDbKey = 'lindon'
 
 class StatisticCGI (CGI.CGI):
 	def processParms(self):
