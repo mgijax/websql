@@ -5,7 +5,7 @@
 # task to see details of it.
 
 # optional parameters:
-#	server : string server name (default PROD_MGI)
+#	server : string server name (default PROD1_MGI)
 #	database : string database name (default mgd)
 #	user : string username
 #	task : string task name
@@ -23,7 +23,7 @@ class PermissionCGI (CGI.CGI):
 
 		self.get_parms()		# fills in self.fields
 
-		self.server = 'PROD_MGI'
+		self.server = 'PROD1_MGI'
 		self.database = 'mgd'
 		self.user = None
 		self.task = None
