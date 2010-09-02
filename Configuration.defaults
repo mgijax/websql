@@ -1,11 +1,17 @@
 # full path to the python interpreter
 PYTHON		/usr/local/bin/python
 
-# name of the database user
-DBUSER		mgd_public
+# Sybase username and password
+SYBASE_USER	mgd_public
+SYBASE_PASSWORD	mgdpub
 
-# database password
-DBPASSWORD	mgdpub
+# MySQL username and password
+MYSQL_USER	mgddbo
+MYSQL_PASSWORD	mgddbo
+
+# Postgres username and password
+POSTGRES_USER	mgddbo
+POSTGRES_PASSWORD	mgddbo
 
 # path to a directory containing the database library
 DBDIR		/usr/local/mgi/live/lib/python/
