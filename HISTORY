@@ -1,3 +1,10 @@
+TAG: websql-4-3-5-2
+DATE: 09/02/2010
+STAFF: jsb
+CHANGES:
+1) added support for MySQL and Postgres
+2) added new browse.cgi script for simple schema browsing
+
 TAG: websql-4-3-5-1
 DATE: 06/18/2010
 STAFF: dbm
