@@ -17,16 +17,18 @@ import Pulldowns
 import ServerMap
 import db
 import time
+import dbManager
 
-VERSION = '1.0'
+VERSION = '1.1'
 
 FORMAT = None
 HTML = 1	# values for FORMAT:
 TAB = 2
 TEXT = 3
 
-parms = { 'database' : 'mgd_release',
-	'server' : 'MGD_DEV',
+# default to the production mirror
+parms = { 'database' : 'mgd',
+	'server' : 'DEV_MGI',
 	'sql' : '',
 	'format' : 'html',
 	}
@@ -141,6 +143,8 @@ class Table:
 				elif val_type == types.FloatType:
 					s = s + '<TD align=right>%f' % \
 						row[col]
+				elif val_type == types.NoneType:
+					s = s + '<TD>null'
 				else:
 					s = s + '<TD>%s' % \
 						cgi.escape(str(row[col]))
@@ -198,6 +202,12 @@ class Table:
 					maxlens[i]))
 			lines.append (s)
 		return string.join (lines, '\n')
+
+class MP_Table (Table):
+	def __init__ (self, columns, rows):
+		self.cols = columns
+		self.rows = rows
+		return
 
 class Traceback:
 	def __init__ (self, tb, tracebackType = None, tracebackValue = None):
@@ -258,6 +268,7 @@ class Traceback:
 
 def form (parms, pulldowns):
 	sql = parms ['sql']
+	dbms = parms['DBMS1']
 	server = parms ['server']
 	database = parms ['database']
 	script = os.path.basename (os.environ['SCRIPT_NAME'])
@@ -267,19 +278,24 @@ def form (parms, pulldowns):
 		"<INPUT TYPE=button onClick='window.location.href=%s' VALUE='Start Over'>"\
 			% ('"%s"' % script),
 		'<TABLE BORDER=0 WIDTH=90%><TR>',
-		'  <TD align=center>Server: %s' % pulldowns.server (server),
-		'  <TD align=center>Database: %s' % \
-			pulldowns.database (server, database),
+		'  <TD align=center>RDBMS: %s' % pulldowns.dbms (dbms),
+		'  <TD align=center>Server: %s' % pulldowns.server (dbms,
+			server),
+		'  <TD align=center>Database: %s' % pulldowns.database (dbms,
+			server, database),
+		'  <A HREF="javascript:browse()">(browse tables)</A>',
 		'  <TD align=center>Output As: <SELECT NAME=format>',
 		'    <OPTION VALUE="html" SELECTED>HTML',
 		'    <OPTION VALUE="tab">Tab-delimited',
 		'    <OPTION VALUE="text">Text',
 		'    </SELECT>',
 		'</TABLE>',
+		'<INPUT TYPE=hidden NAME=origdbms VALUE=%s>' % dbms,
 		'<INPUT TYPE=hidden NAME=origserver VALUE=%s>' % server,
+		'<INPUT TYPE=hidden NAME=origdatabase VALUE=%s>' % database,
 		'<TABLE BORDER=0 WIDTH=90%><TR>',
 		'  <TD align=left> SQL (separate commands by ||):',
-		'  <TD align=right> <I>Example: set rowcount 15 || ' + \
+		'  <TD align=right> <I>Sybase Example: set rowcount 15 || ' + \
 			'select * from MRK_Marker</I><BR>',
 		'  <TR><TD colspan=2 align=center>',
 		'    <TEXTAREA NAME=sql rows=%s cols=%s>%s</TEXTAREA>' % \
@@ -291,12 +307,33 @@ def form (parms, pulldowns):
 	return string.join (lines, '\n')
 	
 def results (parms):
-	db.set_sqlLogin (config.lookup('DBUSER'), config.lookup('DBPASSWORD'),
-		parms['server'], parms['database'])
-	db.useOneConnection(1)
+	dbms = parms['DBMS1']
+
+	if dbms == 'sybase':
+		db.set_sqlLogin (config.lookup('SYBASE_USER'),
+			config.lookup('SYBASE_PASSWORD'),
+			parms['server'], parms['database'])
+		db.useOneConnection(1)
+	elif dbms == 'mysql':
+		dbm = dbManager.mysqlManager (parms['server'],
+			parms['database'], config.lookup('MYSQL_USER'),
+			config.lookup('MYSQL_PASSWORD') )
+	elif dbms == 'postgres':
+		dbm = dbManager.postgresManager (parms['server'],
+			parms['database'], config.lookup('POSTGRES_USER'),
+			config.lookup('POSTGRES_PASSWORD') )
 
 	i = 0
 	list = []
+
+	if FORMAT == HTML:
+		list.append ('<HR>')
+	else:
+		list.append ('')
+
+	list.append ('Results from %s : %s..%s' % (parms['DBMS1'],
+		parms['server'], parms['database']))
+
 	queries = string.split (parms['sql'], '||')
 	if len(queries) == 1 and queries[0] == '':
 		queries = []
@@ -318,23 +355,33 @@ def results (parms):
 			list.append ('')
 
 		resetTime()
-		results = db.sql (query, 'auto')
-		stats = '%d rows returned, %4.3f seconds' % (len(results),
+
+		if dbms == 'sybase':
+			results = db.sql (query, 'auto')
+			count = len(results)
+			tbl = Table(query, results)
+
+		else:	# postgres or mysql
+			columns, rows = dbm.execute (query)
+			count = len(rows)
+			tbl = MP_Table(columns, rows)
+
+		stats = '%d rows returned, %4.3f seconds' % (count,
 				elapsedTime())
 
 		if FORMAT == HTML:
 			list.append ('<FONT SIZE="-1">%s</FONT><P>' % stats)
-			list.append (Table (query, results).html())
+			list.append (tbl.html())
 
 		elif FORMAT == TAB:
 			list.append (stats)
 			list.append ('')
-			list.append (Table (query, results).tab())
+			list.append (tbl.tab())
 
 		elif FORMAT == TEXT:
 			list.append (stats)
 			list.append ('')
-			list.append (Table (query, results).text())
+			list.append (tbl.text())
 	    except:
 		tb = Traceback (traceback.extract_tb (sys.exc_traceback),
 					sys.exc_type, sys.exc_value)
@@ -352,6 +399,7 @@ def process_parms ():
 	fs = cgi.FieldStorage()
 	for k in fs.keys():
 		parms[k] = fs[k].value
+		sys.stderr.write ('%s : %s\n' % (k, parms[k]))
 
 	if parms['format'] == 'html':
 		FORMAT = HTML
@@ -365,6 +413,7 @@ title = 'websql %s' % VERSION
 header = '<HTML><HEAD><TITLE>%s</TITLE></HEAD><BODY><H3>%s</H3>' % \
 	(title, title)
 footer = '</BODY></HTML>'
+
 if __name__ == '__main__':
 	subnet = os.environ['REMOTE_ADDR'][0:8]
 	subnetNew = os.environ['REMOTE_ADDR'][0:11] 
@@ -380,12 +429,29 @@ if __name__ == '__main__':
 	servermap = ServerMap.ServerMap (config.lookup ('MAPFILE'))
 	pulldowns = Pulldowns.Pulldowns (servermap)
 
+	if servermap.default_dbms() != '':
+		parms['DBMS1'] = servermap.default_dbms()
 	if servermap.default_server() != '':
 		parms['server'] = servermap.default_server()
 	if servermap.default_database() != '':
 		parms['database'] = servermap.default_database()
 
 	process_parms()
+
+	noDriver = None
+	if (parms['DBMS1'] == 'mysql') and (not dbManager.LOADED_MYSQL_DRIVER):
+		noDriver = 'Could not find the MySQLdb module'
+	elif (parms['DBMS1'] == 'postgres') and \
+			(not dbManager.LOADED_POSTGRES_DRIVER):
+		noDriver = 'Could not find the psycopg2 module for Postgres'
+
+	if noDriver:
+		print 'Content-type: text/html\n'
+		print header
+		print 'Failed: "%s"' % noDriver
+		print footer
+		sys.exit(0)
+
 	if FORMAT == HTML:
 		print 'Content-type: text/html\n'
 		print header
