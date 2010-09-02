@@ -61,8 +61,3 @@ $PYTHON -c 'import config'
 echo "Setting permissions"
 chgrp $GROUP *pyc *cgi $MAPFILE
 chmod 750 *pyc *cgi $MAPFILE
-
-# make sure the pickled configuration file is writeable by the right group
-
-chmod 770 *pkl
-chgrp $GROUP *pkl

@@ -3,19 +3,8 @@
 # On Import: 
 #	1. searches back up through up to five directory levels to find the
 #		nearest instance of a "Configuration" file.
-#	2. tests to see if a pickled version of the file exists and is at
-#		least as recent as the plain text one
-#	3. if so, loads the pickled version
-#	4. if not, loads the plain text one and save a pickled version
-#	5. adds the WI_PATH/lib/python directory to sys.path
-#
-# Notes: As regular expressions are a bit slow, I decided to store a pickled
-#	version of the data structure which contains the configuration info.
-#	This way, as long as it is kept up-to-date, we don't need to parse
-#	the config file each time this module is imported -- only once after
-#	each update to the config file.  In other instances, we can just
-#	load in the data structure directly without regular expression
-#	parsing.
+#	2. loads the config file
+#	3. adds the WI_PATH/lib/python directory to sys.path
 
 import os
 import sys
@@ -36,7 +25,6 @@ except:
 	pass
 
 import regex
-import pickle
 
 def find_path (
 	s = 'Configuration',	# string pathname for which we're looking
@@ -64,20 +52,18 @@ def find_path (
 # -----------------
 
 TEXT_FILE = find_path ('Configuration')		# path to config file
-PICKLE_FILE = TEXT_FILE + '.pkl'		# path to pickled version
 CONFIG = {}					# configuration info
 
 
-def generate_Pickle_File (
-	source,		# pathname to config file to read
-	dest		# pathname to overwrite with pickled config data
+def readConfigFile (
+	source		# pathname to config file to read
 	):
 	# Purpose: read the configuration file at 'source', parse it,
-	#	store values in a dictionary, and pickle it out to 'dest'
+	#	store values in a dictionary
 	# Returns: the dictionary parsed from 'source'
-	# Assumes: 'source' exists, and 'dest' is writeable
-	# Effects: overwrites 'dest'
-	# Throws: IOError if there are problems reading/writing
+	# Assumes: 'source' exists
+	# Effects: reads from the file system
+	# Throws: IOError if there are problems reading
 
 	fp = open (source, 'r')
 	lines = fp.readlines ()
@@ -94,9 +80,6 @@ def generate_Pickle_File (
 			if data_line.match (line) != -1:
 				(parameter, value) = data_line.group (1,2)
 				dict [string.upper (parameter)] = value
-	fp = open (dest, 'w')
-	pickle.dump (dict, fp)				# save to pickled file
-	fp.close ()
 	return dict
 
 
@@ -126,16 +109,7 @@ if (TEXT_FILE is None) or (not os.path.exists (TEXT_FILE)):
 	print "missing config file in %s" % TEXT_FILE
 	sys.exit (-1)
 
-# See if the pickled config file is missing or is out-of-date.  If so, re-
-# generate it.  If not, just load the data structure from the file.
-
-if (not os.path.exists (PICKLE_FILE)) or \
-		(os.stat (TEXT_FILE)[8] > os.stat (PICKLE_FILE)[8]):
-	CONFIG = generate_Pickle_File (TEXT_FILE, PICKLE_FILE)
-else:
-	fp = open (PICKLE_FILE, 'r')
-	CONFIG = pickle.load (fp)
-	fp.close ()
+CONFIG = readConfigFile (TEXT_FILE)
 
 # add the database directory library directory to the python path
 
