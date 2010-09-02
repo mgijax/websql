@@ -1,3 +1,9 @@
+TAG: websql-4-3-5-3
+DATE: 09/02/2010
+STAFF: dbm
+CHANGES:
+1) set group to www on Configuration file in the Install script
+
 TAG: websql-4-3-5-2
 DATE: 09/02/2010
 STAFF: jsb
