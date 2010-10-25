@@ -1,3 +1,9 @@
+TAG: websql-4-4-0-1
+DATE: 10/25/2010
+STAFF: dbm
+CHANGES:
+1) dbmap.txt: merge DEV1_SNP into DEV1_MGI and consolidate databases
+
 TAG: websql-4-3-5-3
 DATE: 09/02/2010
 STAFF: dbm
