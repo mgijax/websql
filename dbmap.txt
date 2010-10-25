@@ -10,8 +10,7 @@
 [sybase]
 ADHOC_MGI: imsr mgd radar
 DEV_MGI: mgd mgd_dbm mgd_lec radar radar_dbm radar_dow snp wts
-DEV1_MGI: imsr mgd_lec1 mgd_sc1 mgd_test mgd_wi1 mgd_wi2 radar_1 radar_2 radar_test snp_test
-DEV1_SNP: mgd_be snp_be snp_dev_be
+DEV1_MGI: imsr mgd_be mgd_lec1 mgd_sc1 mgd_test mgd_wi1 radar_1 radar_test snp_be snp_test
 DEV2_MGI: imsr mgd mgd_old radar radar_old snp
 PROD1_MGI: imsr *mgd radar snp wts
 PROD2_MGI: mgd_be radar snp_be
