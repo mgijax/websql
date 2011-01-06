@@ -1,3 +1,9 @@
+TAG: websql-4-4-1-1
+DATE: 1/6/2011
+STAFF: dbm
+CHANGES:
+1) dbmap.txt: Changed default database to DEV_MGI..mgd
+
 TAG: websql-4-4-0-2
 DATE: 11/3/2010
 STAFF: dbm
