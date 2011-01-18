@@ -1,3 +1,12 @@
+TAG: websql-4-4-1-2
+DATE: 1/18/2011
+STAFF: dbm
+CHANGES:
+1) dbmap.txt: Removed - replaced with dbmap.txt.all and dbmap.txt.dev
+2) Configuration.defaults: Added new settings for new mapping files
+3) Install: Added new mapping file support
+4) setMapfile: New - to be run via cron to swap mapping files
+
 TAG: websql-4-4-1-1
 DATE: 1/6/2011
 STAFF: dbm
