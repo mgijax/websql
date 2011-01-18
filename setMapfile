@@ -1,0 +1,61 @@
+#!/bin/sh
+
+cd `dirname $0`
+
+USAGE="Usage: $0 {dev|all}"
+
+CONFIGURATION=./Configuration
+
+#
+# Make sure the configuration file exists.
+#
+if [ ! -r ${CONFIGURATION} ]
+then
+    echo "Missing configuration file"; exit 1
+fi
+
+#
+# Get the mapping file settings that are needed by this script.
+#
+exec 4<&0
+exec < ${CONFIGURATION}
+while read name value junk
+do
+    case "$name" in
+        GROUP)
+            GROUP=$value;;
+        MAPFILE)
+            MAPFILE=$value;;
+        MAPFILE_ALL)
+            MAPFILE_ALL=$value;;
+        MAPFILE_DEV)
+            MAPFILE_DEV=$value;;
+        *)
+            ;;
+    esac
+done
+exec 0<&4
+
+#
+# Determine which mapping file should be activated, based on the argument
+# to the script.
+#
+if [ $# -ne 1 ]
+then
+    echo ${USAGE}; exit 1
+elif [ "$1" = "dev" ]
+then
+    MAP=${MAPFILE_DEV}
+elif [ "$1" = "all" ]
+then
+    MAP=${MAPFILE_ALL}
+else
+    echo ${USAGE}; exit 1
+fi
+
+#
+# Activate the mapping file.
+#
+rm -f ${MAPFILE}
+ln -s ${MAP} ${MAPFILE}
+chgrp ${GROUP} ${MAPFILE}

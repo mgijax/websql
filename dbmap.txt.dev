@@ -1,0 +1,19 @@
+# format:
+# SERVER: database database database...
+
+# indicate the default server:database combination by putting a '*' before
+# the desired database.
+
+# add a line with [sybase], [postgres], or [mysql] to divide sections; lines
+# after one of these dividers will be mapped to that particular RDBMS
+
+[sybase]
+DEV_MGI: *mgd mgd_dbm mgd_dev radar radar_dbm radar_dev snp wts
+DEV1_MGI: imsr mgd_be mgd_lec1 mgd_sc1 mgd_test mgd_wi1 radar_1 radar_test snp_be snp_test
+DEV2_MGI: imsr mgd mgd_old radar radar_old snp
+
+[postgres]
+cardolan: fe_backend fe_frontend fe_stable mgd
+
+[mysql]
+cardolan: mgd_dev2 mgd_proto
