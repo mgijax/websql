@@ -69,4 +69,4 @@ $PYTHON -c 'import config'
 
 echo "Setting permissions"
 chgrp $GROUP *pyc *cgi $MAPFILE_ALL $MAPFILE_DEV $CONFIGURATION
-chmod 750 *pyc *cgi $MAPFILE_ALL $MAPFILE_DEV
+chmod 750 setMapfile *pyc *cgi $MAPFILE_ALL $MAPFILE_DEV
