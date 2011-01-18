@@ -17,7 +17,19 @@ POSTGRES_PASSWORD	mgddbo
 DBDIR		/usr/local/mgi/live/lib/python/
 
 # name of the server:database mapping file
-MAPFILE		dbmap.txt
+#
+# The first one contains all available databases and should be active during
+# curation hours.
+#
+# The second one contains only development database and should be active
+# when loads are running (non-curation hours).
+#
+# The third one is the symbol link that is created by the install script
+# and moved by a cron to point to the appropriate mapping file that should
+# be active, based on whether it is during curation hours.
+MAPFILE_ALL		dbmap.txt.all
+MAPFILE_DEV		dbmap.txt.dev
+MAPFILE			dbmap.txt
 
 # size of the text entry window
 HEIGHT		10

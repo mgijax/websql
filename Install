@@ -27,6 +27,10 @@ do
 			DBDIR=$value;;
 		MAPFILE)
 			MAPFILE=$value;;
+		MAPFILE_ALL)
+			MAPFILE_ALL=$value;;
+		MAPFILE_DEV)
+			MAPFILE_DEV=$value;;
 		[A-z]*)
 			;;	# other parms are not needed by Install
 	esac
@@ -36,6 +40,11 @@ exec 0<&4
 # protect files from world access
 
 chmod o-rwx *
+
+# set up the mapping file sym link, assuming that this is during curation
+# hours when all databases should be active
+
+ln -s $MAPFILE_ALL $MAPFILE
 
 # make Python link
 
@@ -59,5 +68,5 @@ $PYTHON -c 'import config'
 # set permissions for group to read & execute
 
 echo "Setting permissions"
-chgrp $GROUP *pyc *cgi $MAPFILE $CONFIGURATION
-chmod 750 *pyc *cgi $MAPFILE
+chgrp $GROUP *pyc *cgi $MAPFILE_ALL $MAPFILE_DEV $CONFIGURATION
+chmod 750 *pyc *cgi $MAPFILE_ALL $MAPFILE_DEV
