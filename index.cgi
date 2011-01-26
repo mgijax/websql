@@ -297,6 +297,8 @@ def form (parms, pulldowns):
 		'  <TD align=left> SQL (separate commands by ||):',
 		'  <TD align=right> <I>Sybase Example: set rowcount 15 || ' + \
 			'select * from MRK_Marker</I><BR>',
+		'  <I>Postgres Example: select * from mrk_marker ' + \
+			'limit 15</I><BR>',
 		'  <TR><TD colspan=2 align=center>',
 		'    <TEXTAREA NAME=sql rows=%s cols=%s>%s</TEXTAREA>' % \
 			(config.lookup ('HEIGHT'), config.lookup ('WIDTH'),
