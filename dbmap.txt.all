@@ -13,7 +13,7 @@ DEV_MGI: *mgd mgd_dbm mgd_dev radar radar_dbm radar_dev snp wts
 DEV1_MGI: imsr mgd_be mgd_lec1 mgd_sc1 mgd_test mgd_wi1 radar_1 radar_test snp_be snp_test
 DEV2_MGI: imsr mgd mgd_old radar radar_old snp
 PROD1_MGI: imsr mgd radar snp wts
-PROD2_MGI: mgd_be radar snp_be
+PROD2_MGI: mgd_be mgd_copy radar snp_be
 PUB_MGI: imsr pub_1 pub_2 radar snp_1 snp_2
 BOT_MGI: imsr mgd radar snp
 
