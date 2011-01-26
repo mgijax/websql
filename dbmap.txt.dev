@@ -13,7 +13,8 @@ DEV1_MGI: imsr mgd_be mgd_lec1 mgd_sc1 mgd_test mgd_wi1 radar_1 radar_test snp_b
 DEV2_MGI: imsr mgd mgd_old radar radar_old snp
 
 [postgres]
-cardolan: fe_backend fe_frontend fe_stable mgd
+cardolan: fe_backend fe_frontend fe_stable fe_weekly mgd
+mtdoom: fe mgd
 
 [mysql]
 cardolan: mgd_dev2 mgd_proto
