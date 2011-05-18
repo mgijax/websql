@@ -120,7 +120,7 @@ class Table:
 		return
 
 	def html (self):
-		if len(self.rows) == 0:
+		if (not self.rows) or (len(self.rows) == 0):
 			return ''
 
 		lines = [ '<TABLE border=1>' ]
@@ -365,7 +365,10 @@ def results (parms):
 
 		else:	# postgres or mysql
 			columns, rows = dbm.execute (query)
-			count = len(rows)
+			if rows:
+				count = len(rows)
+			else:
+				count = 0
 			tbl = MP_Table(columns, rows)
 
 		stats = '%d rows returned, %4.3f seconds' % (count,
