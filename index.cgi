@@ -420,17 +420,6 @@ header = '<HTML><HEAD><TITLE>%s</TITLE></HEAD><BODY><H3>%s</H3>' % \
 footer = '</BODY></HTML>'
 
 if __name__ == '__main__':
-	subnet = os.environ['REMOTE_ADDR'][0:8]
-	subnetNew = os.environ['REMOTE_ADDR'][0:11] 
-	if subnet not in [ '10.150.1', '10.160.1'] and \
-	    subnetNew != '209.222.209':
-		print 'Content-type: text/html\n'
-		print header
-		print 'Permission denied.  You need to be in the Jax domain'
-		print '<BR>Subnet: %s' % subnet
-		print footer
-		sys.exit (0)
-
 	servermap = ServerMap.ServerMap (config.lookup ('MAPFILE'))
 	pulldowns = Pulldowns.Pulldowns (servermap)
 
