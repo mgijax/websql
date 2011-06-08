@@ -20,6 +20,7 @@ BOT_MGI: imsr mgd radar snp
 [postgres]
 cardolan: fe_backend fe_frontend fe_stable fe_weekly mgd
 mtdoom: fe mgd
+falas: mgd
 
 [mysql]
 cardolan: mgd_dev2 mgd_proto
