@@ -1,3 +1,9 @@
+TAG: websql-4-4-1-6
+DATE: 8/8/2011
+STAFF: dbm
+CHANGES:
+1) dbmap.txt.all: Added PROD2_MGI..mgd_export
+
 TAG: websql-4-4-1-5
 DATE: 5/18/2011
 STAFF: dbm
