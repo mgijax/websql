@@ -1,3 +1,10 @@
+TAG: websql-4-4-1-7
+DATE: 11/21/2011
+STAFF: dbm
+CHANGES:
+1) dbmap.txt.all, dbmap.txt.dev: Updated Postgres database lists
+2) Configuration.defaults: Use mgd_public user for Postgres
+
 TAG: websql-4-4-1-6
 DATE: 8/8/2011
 STAFF: dbm
