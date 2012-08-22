@@ -1,3 +1,9 @@
+TAG: websql-5-0-0-1
+DATE: 08/22/2012
+STAFF: jsb
+CHANGES:
+1) dbmap.txt.all, dbmap.txt.dev: Updated Postgres database lists
+
 TAG: websql-4-4-1-7
 DATE: 11/21/2011
 STAFF: dbm
