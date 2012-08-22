@@ -13,10 +13,12 @@ DEV1_MGI: imsr mgd_be mgd_lec1 mgd_sc1 mgd_test mgd_wi1 radar_1 radar_test snp_b
 DEV2_MGI: imsr mgd mgd_old radar radar_old snp
 
 [postgres]
-rohan: lec sc
+rohan: lec sc ikmcdb_development
+cardolan: fe fe_dev fe_jsb fe_kstone fe_lec pub pub_jsb pub_kstone
 firien: dev
 nardol: dev
-mtdoom: export fe_backend fe_dev fe_stable pub_dev pub_stable
+mgi-testdb3: export fe fe_dev fe_mover pub pub_dev
+mtdoom: export fe lec lec2
 mgi-fedb1: fe pub
 mgi-fedb2: fe pub
 
