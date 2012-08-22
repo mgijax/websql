@@ -8,7 +8,6 @@
 # after one of these dividers will be mapped to that particular RDBMS
 
 [sybase]
-ADHOC_MGI: imsr mgd radar
 DEV_MGI: *mgd mgd_dbm mgd_dev radar radar_dbm radar_dev snp wts
 DEV1_MGI: imsr mgd_be mgd_lec1 mgd_sc1 mgd_test mgd_wi1 radar_1 radar_test snp_be snp_test
 DEV2_MGI: imsr mgd mgd_old radar radar_old snp
@@ -18,13 +17,18 @@ PUB_MGI: imsr pub_1 pub_2 radar snp_1 snp_2
 BOT_MGI: imsr mgd radar snp
 
 [postgres]
-rohan: lec sc
+adhoc: mgd mgd_load
+rohan: lec sc ikmcdb_development
+cardolan: fe fe_dev fe_jsb fe_kstone fe_lec pub pub_jsb pub_kstone
 firien: dev
 nardol: dev
-mtdoom: export fe_backend fe_dev fe_stable pub_dev pub_stable
+mgi-testdb3: export fe fe_dev fe_mover pub pub_dev
+mtdoom: export fe lec lec2
 mgi-fedb1: fe pub
 mgi-fedb2: fe pub
 falas: export fe
 
 [mysql]
-cardolan: mgd_dev2 mgd_proto
+cardolan: mgd_dev1 mgd_dev2 mgd_proto
+falas: mgd
+angmar: biomart
