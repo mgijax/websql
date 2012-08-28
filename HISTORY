@@ -1,3 +1,10 @@
+TAG: websql-5-0-0-2
+DATE: 08/28/2012
+STAFF: dbm
+CHANGES:
+1) dbmap.txt.all: Remove PUB_MGI and BOT_MGI; Update DEV2_MGI
+2) dbmap.txt.dev: Update DEV2_MGI
+
 TAG: websql-5-0-0-1
 DATE: 08/22/2012
 STAFF: jsb
