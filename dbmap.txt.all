@@ -8,25 +8,31 @@
 # after one of these dividers will be mapped to that particular RDBMS
 
 [sybase]
-DEV_MGI: *mgd mgd_dev mgd_load radar radar_dev radar_load snp wts
-DEV1_MGI: imsr mgd_be mgd_lec1 mgd_sc1 mgd_test mgd_wi1 radar_1 radar_test snp_be snp_test
-DEV2_MGI: imsr mgd_be mgd_old radar radar_old snp_be
-PROD1_MGI: imsr mgd radar snp wts
-PROD2_MGI: mgd_be mgd_copy mgd_export radar snp_be
+DEV_MGI: *mgd mgd_dev mgd_load radar radar_dev radar_load wts
+DEV1_MGI: imsr mgd_be mgd_lec1 mgd_sc1 mgd_test mgd_wi1 radar_1 radar_test
+DEV2_MGI: imsr mgd_be mgd_old radar radar_old
+PROD1_MGI: imsr mgd mgd_be radar radar_be wts
 
 [postgres]
-adhoc: mgd mgd_load
-rohan: dbm ikmcdb_development lec sc
-cardolan: fe fe_dev fe_jsb fe_kstone fe_lec pub pub_jsb pub_kstone
-mgi-testdb3: export fe fe_dev fe_mover pub pub_dev
+cardolan: fe fe_dev pub pub_dev
+rohan: dbm export fe ikmcdb_development lec sc
 firien: dev
 nardol: dev
-mtdoom: export fe fe_lec lec lec2
+mtdoom: export fe
+mgi-testdb3: export fe_dev fe_mover fe_stable pub_dev pub_stable
+mgi-testdb4: export fe_dev fe_mover fe_stable pub_dev pub_stable
 mgi-fedb1: fe pub
 mgi-fedb2: fe pub
 falas: export fe
+mgi-proddb1: prod pub
+mgi-pubfedb1: fe pub
+mgi-pubfedb2: fe pub
+mgi-botfedb1: fe pub
+mgi-botfedb2: fe pub
+adhoc: mgd mgd_load
 
 [mysql]
 cardolan: mgd_dev1 mgd_dev2 mgd_proto
+rohan: mgi_biomart_dev
 falas: mgd
 angmar: biomart
