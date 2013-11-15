@@ -1,3 +1,9 @@
+TAG: websql-5-1-5-2
+DATE: 11/15/2013
+STAFF: dbm
+CHANGES:
+1) dbmap.txt.all, dbmap.txt.dev: Added mgd_dbm and radar_dbm to DEV_MGI
+
 TAG: websql-5-1-5-1
 DATE: 9/18/2013
 STAFF: dbm
