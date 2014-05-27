@@ -8,9 +8,9 @@
 # after one of these dividers will be mapped to that particular RDBMS
 
 [sybase]
-DEV_MGI: *mgd mgd_dbm mgd_dev mgd_load radar radar_dbm radar_dev radar_load wts
-DEV1_MGI: imsr mgd_be mgd_lec1 mgd_sc1 mgd_test mgd_wi1 radar_1 radar_test
-DEV2_MGI: imsr mgd_be mgd_old radar radar_old
+DEV_MGI: *mgd mgd_bob mgd_dbm mgd_dog radar radar_bob radar_dbm radar_dog wts
+DEV1_MGI: imsr mgd_bob mgd_lec1 mgd_lnh mgd_sc1 mgd_test mgd_test2 radar_bob radar_test radar_test2
+DEV2_MGI: imsr mgd_build mgd_dog radar_build radar_dog
 PROD1_MGI: imsr mgd mgd_be radar radar_be wts
 
 [postgres]
