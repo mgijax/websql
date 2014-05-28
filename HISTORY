@@ -1,3 +1,9 @@
+TAG: websql-5-1-8-2
+DATE: 05/28/2014
+STAFF: dbm
+CHANGES:
+1) dbmap.txt.all, dbmap.txt.dev: Added imsr to DEV_MGI
+
 TAG: websql-5-1-8-1
 DATE: 05/27/2014
 STAFF: dbm
