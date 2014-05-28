@@ -8,7 +8,7 @@
 # after one of these dividers will be mapped to that particular RDBMS
 
 [sybase]
-DEV_MGI: *mgd mgd_bob mgd_dbm mgd_dog radar radar_bob radar_dbm radar_dog wts
+DEV_MGI: imsr *mgd mgd_bob mgd_dbm mgd_dog radar radar_bob radar_dbm radar_dog wts
 DEV1_MGI: imsr mgd_bob mgd_lec1 mgd_lnh mgd_sc1 mgd_test mgd_test2 radar_bob radar_test radar_test2
 DEV2_MGI: imsr mgd_build mgd_dog radar_build radar_dog
 PROD1_MGI: imsr mgd mgd_be radar radar_be wts
