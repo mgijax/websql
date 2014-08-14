@@ -16,13 +16,12 @@ PROD1_MGI: imsr mgd mgd_be radar radar_be wts
 [postgres]
 cardolan: fe fe_dev pub pub_dev
 rohan: dbm export fe ikmcdb_development lec sc
-firien: dev
-nardol: dev
-mtdoom: export fe
 mgi-testdb3: export fe_dev fe_mover fe_stable pub_dev pub_stable
 mgi-testdb4: export fe_dev fe_mover fe_stable pub_dev pub_stable
+firien: dev
+mtdoom: export fe
+bhmgidb02: prod pub
 mgi-fedb1: fe pub
-mgi-fedb2: fe pub
 falas: export fe
 mgi-proddb1: prod pub
 mgi-pubfedb1: fe pub
@@ -33,6 +32,6 @@ adhoc: mgd mgd_load
 
 [mysql]
 cardolan: mgd_dev1 mgd_dev2 mgd_proto
-rohan: mgi_biomart_dev
+rohan: mgi_biomart_dev mgi_biomart_dev2
 falas: mgd
-angmar: biomart
+bhmgibm01: mgi_biomart mgi_biomart_load
