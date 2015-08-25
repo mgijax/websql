@@ -1,14 +1,6 @@
 # full path to the python interpreter
 PYTHON		/usr/local/bin/python
 
-# Sybase username and password
-SYBASE_USER	mgd_public
-SYBASE_PASSWORD	mgdpub
-
-# MySQL username and password
-MYSQL_USER	mgddbo
-MYSQL_PASSWORD	mgddbo
-
 # Postgres username and password
 POSTGRES_USER	mgd_public
 POSTGRES_PASSWORD	mgdpub
@@ -16,30 +8,26 @@ POSTGRES_PASSWORD	mgdpub
 # path to a directory containing the database library
 DBDIR		/usr/local/mgi/live/lib/python/
 
-# name of the server:database mapping file
-#
-# The first one contains all available databases and should be active during
-# curation hours.
-#
-# The second one contains only development database and should be active
-# when loads are running (non-curation hours).
-#
-# The third one is the symbol link that is created by the install script
-# and moved by a cron to point to the appropriate mapping file that should
-# be active, based on whether it is during curation hours.
-MAPFILE_ALL		dbmap.txt.all
-MAPFILE_DEV		dbmap.txt.dev
-MAPFILE			dbmap.txt
-
 # size of the text entry window
-HEIGHT		10
+HEIGHT		12
 WIDTH		70
 
 # unix group used for web access
 GROUP		www
 
-# path to the Sybase directory
-SYBASE		/opt/sybase/12.5
+# 
+#
+# MAPFILE_ALL contains all available databases and should be active during
+# curation hours.
+#
+# MAPFILE_DEV contains only development database and should be active
+# when loads are running (non-curation hours).
+#
+# The third one is the symbolic link that is created by the install script
+# and moved by a cron to point to the appropriate mapping file that should
+# be active, based on whether it is during curation hours.
+#
+MAPFILE_ALL		dbmap.txt.all
+MAPFILE_DEV		dbmap.txt.dev
+MAPFILE			dbmap.txt
 
-# path to Sybase's library directories
-LD_LIBRARY_PATH	/opt/teleuseXRT/lib:/opt/teleuseXRT/conf/lib:/opt/sybase/12.5/ASE-12_5/lib:/opt/sybase/12.5/OCS-12_5/lib:/usr/openwin/lib:/usr/lib:/usr/ucblib:/usr/local/lib

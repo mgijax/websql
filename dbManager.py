@@ -1,6 +1,6 @@
 # Name: dbManager.py
 # Purpose: to provide a simple, consistent, convenient mechanism for working
-#	with MySQL and Postgres database connections
+#	with Postgres database connections
 
 import os
 import traceback
@@ -8,19 +8,11 @@ import sys
 
 ###--- Globals ---###
 
-LOADED_MYSQL_DRIVER = False	# have we loaded the MySQL python module?
 LOADED_POSTGRES_DRIVER = False	# have we loaded the Postgres python module?
 
-MYSQL = 'MySQL'			# constant; identifies type of dbManager
 POSTGRES = 'Postgres'		# constant; identifies type of dbManager
 
 Error = 'dbManager.Error'    # string; exception to be raised in this module
-
-try:
-	import MySQLdb
-	LOADED_MYSQL_DRIVER = True
-except:
-	pass
 
 try:
 	import psycopg2
@@ -61,12 +53,7 @@ class dbManager:
 
 	self.sharedConnection = None	# shared Connection object
 
-	# should we return results as a list of dictionaries like Sybase?
-	# (default is NO)
-	self.returnAsSybase = False
-
 	# connection parameters
-
 	self.host = host
 	self.database = database
 	self.user = user
@@ -104,9 +91,6 @@ class dbManager:
 	# Returns: natively, a 2-item tuple:
 	#	(list of column names, list of lists -- each inner list of a
 	#	list of values for the columns for that row)
-	# 	or, if operating in 'return as Sybase' mode, returns:
-	#	list of dictionaries, each of which has fieldnames as keys
-	#	with each mapped to its value for that row
 	# Assumes: we have the necessary permissions to execute the database
 	#	statement
 	# Modifies: could alter database structure or contents, depending on
@@ -152,36 +136,7 @@ class dbManager:
 	rows = cursor.fetchall()
 	cursor.close()
 
-	# if we need to convert our return value to mimic our db.sql()
-	# function for Sybase, then convert the columns and rows...
-
-	if self.returnAsSybase:
-		return __asSybase ( (columns, rows) )
 	return columns, rows
-
-    def getReturnAsSybase (self):
-	# Purpose: examine the flag for whether our results are Sybase-style
-	#	(True) or not (False)
-	# Returns: boolean
-	# Assumes: nothing
-	# Modifies: nothing
-	# Throws: nothing
-
-	return self.returnAsSybase
-
-    def setReturnAsSybase (self,
-	flag				# boolean; True for Sybase-style,
-					# ...False if not
-	):
-	# Purpose: configure this dbManager to either return Sybase-style
-	#	results (True) or not (False)
-	# Returns: nothing
-	# Assumes: nothing
-	# Modifies: nothing
-	# Throws: nothing
-
-	self.returnAsSybase = flag
-	return
 
     def commit (self):
 	# Purpose: issue a 'commit' command on the shared connection, if one
@@ -249,32 +204,6 @@ class dbManager:
 
 	raise Error, 'Must implement _setDbType() in a subclass'
 
-class mysqlManager (dbManager):
-    # Is: a dbManager that knows how to interact with MySQL
-    # Has: see dbManager
-    # Does: see dbManager
-
-    def _setDbType (self):
-	# Purpose: to set this dbManager's database type to be MYSQL
-	# Other: see dbManager._setDbType() for other comments
-
-	self.dbType = MYSQL
-	return
-
-    def _getConnection (self):
-	# Purpose: to get a connection to a MySQL database
-	# Returns: connection object
-	# Assumes: nothing
-	# Modifies: nothing
-	# Throws: propagates any exceptions from MySQLdb.connect() method
-
-	if not LOADED_MYSQL_DRIVER:
-		raise Error, \
-		    'Cannot get connection; MySQLdb driver was not loaded'
-
-	return MySQLdb.connect (host=self.host, user=self.user,
-		passwd=self.password, db=self.database, local_infile=1)
-
 class postgresManager (dbManager):
     # Is: a dbManager that knows how to interact with Postgres
     # Has: see dbManager
@@ -323,30 +252,4 @@ def __readPasswordFile (
 		raise Exception(Error, 'Cannot read password file: %s' % file)
 	return password
 
-def __asSybase (
-	columnsAndRows		# tuple, as returned by execute()
-	):
-	# Purpose: convert the dbManager-format query returns into a
-	#	Sybase-style list of dictionaries, as would be returned by
-	#	db.sql() for a single SQL statement
-	# Returns: list of dictionaries.  Each dictionary is for one row of
-	#	data, with fieldnames as keys and field values as values.
-	# Assumes: nothing
-	# Modifies: nothing
-	# Throws: nothing
 
-	columns, rows = columnsAndRows
-
-	sybRows = []
-
-	for row in rows:
-		sybRow = {}
-
-		i = 0
-		for col in columns:
-			sybRow[col] = row[i]
-			i = i + 1
-
-		sybRows.append (sybRow)
-
-	return sybRows

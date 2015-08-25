@@ -10,21 +10,6 @@ class Pulldowns:
 		self.data = servermap.nested_dict()
 		return
 
-	def dbms (self, selected_dbms = None):
-		dbms_list = self.data.keys()
-		dbms_list.sort()
-		if selected_dbms is None:
-			selected_dbms = dbms_list[0]
-
-		list = [ '<SELECT NAME=DBMS1 onChange="do_dbms(DBMS1.options[DBMS1.selectedIndex].text)">' ]
-		for dbms in dbms_list:
-			if dbms == selected_dbms:
-				list.append ('<OPTION SELECTED> %s' % dbms)
-			else:
-				list.append ('<OPTION> %s' % dbms)
-		list.append ('</SELECT>')
-		return '\n'.join (list) 
-
 	def database (self,
 		selected_dbms = None,
 		selected_server = None, 

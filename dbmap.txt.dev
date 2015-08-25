@@ -7,11 +7,6 @@
 # add a line with [sybase], [postgres], or [mysql] to divide sections; lines
 # after one of these dividers will be mapped to that particular RDBMS
 
-[sybase]
-DEV_MGI: *mgd mgd_bob mgd_dbm mgd_dog radar radar_bob radar_dbm radar_dog wts
-DEV1_MGI: mgd_bob mgd_lec1 mgd_lnh mgd_sc1 mgd_test mgd_test2 radar_bob radar_test radar_test2
-DEV2_MGI: mgd_build mgd_dog radar_build radar_dog
-
 [postgres]
 cardolan: fe pub
 mgi-testdb3: export fe_dev fe_mover fe_stable pub_dev pub_stable
@@ -21,7 +16,3 @@ bhmgidevdb01: prod
 mtdoom: export fe
 bhmgidb02: prod pub
 mgi-fedb1: fe pub
-
-[mysql]
-cardolan: mgd_dev1 mgd_dev2 mgd_proto
-rohan: mgi_biomart_dev mgi_biomart_dev2

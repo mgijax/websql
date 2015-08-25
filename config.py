@@ -116,10 +116,4 @@ CONFIG = readConfigFile (TEXT_FILE)
 if lookup('DBDIR') not in sys.path:
 	sys.path.insert (0, lookup('DBDIR'))
 
-# export the SYBASE and LD_LIBRARY_PATH variables
-
-for var in [ 'SYBASE', 'LD_LIBRARY_PATH' ]:
-	if lookup(var) != None:
-		os.environ[var] = lookup(var)
-
 # ********** end of module initialization **********

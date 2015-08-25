@@ -278,12 +278,10 @@ def form (parms, pulldowns):
 		"<INPUT TYPE=button onClick='window.location.href=%s' VALUE='Start Over'>"\
 			% ('"%s"' % script),
 		'<TABLE BORDER=0 WIDTH=90%><TR>',
-		'  <TD align=center>RDBMS: %s' % pulldowns.dbms (dbms),
 		'  <TD align=center>Server: %s' % pulldowns.server (dbms,
 			server),
 		'  <TD align=center>Database: %s' % pulldowns.database (dbms,
 			server, database),
-		'  <A HREF="javascript:browse()">(browse tables)</A>',
 		'  <TD align=center>Output As: <SELECT NAME=format>',
 		'    <OPTION VALUE="html" SELECTED>HTML',
 		'    <OPTION VALUE="tab">Tab-delimited',
@@ -433,10 +431,7 @@ if __name__ == '__main__':
 	process_parms()
 
 	noDriver = None
-	if (parms['DBMS1'] == 'mysql') and (not dbManager.LOADED_MYSQL_DRIVER):
-		noDriver = 'Could not find the MySQLdb module'
-	elif (parms['DBMS1'] == 'postgres') and \
-			(not dbManager.LOADED_POSTGRES_DRIVER):
+	if (parms['DBMS1'] == 'postgres') and (not dbManager.LOADED_POSTGRES_DRIVER):
 		noDriver = 'Could not find the psycopg2 module for Postgres'
 
 	if noDriver:
