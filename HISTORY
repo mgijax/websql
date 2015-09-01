@@ -1,3 +1,8 @@
+TAG: websql-6-0-0-1
+DATE: 9/1/15
+STAFF: pf
+CHANGES: removal of sybase and mysql
+
 TAG: websql-5-2-1-2
 DATE: 03/19/2015
 STAFF: dbm
