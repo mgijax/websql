@@ -14,6 +14,7 @@ mgi-testdb4: export fe_dev fe_mover fe_stable pub_dev pub_stable
 rohan: *export fe pub
 bhmgidevdb01: prod
 mtdoom: pub fe
+bhmgidb05ld: pub fe
 bhmgidb02: pub
 mgi-fedb1: fe pub
 bhmgidb01: prod
