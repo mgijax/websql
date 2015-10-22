@@ -13,12 +13,12 @@ mgi-testdb3: export fe_dev fe_mover fe_stable pub_dev pub_stable
 mgi-testdb4: export fe_dev fe_mover fe_stable pub_dev pub_stable
 rohan: *export fe pub
 bhmgidevdb01: prod
-mtdoom: export fe
-bhmgidb02: prod pub
+mtdoom: pub fe
+bhmgidb02: pub
 mgi-fedb1: fe pub
 bhmgidb01: prod
-falas: export fe
-mgi-proddb1: prod pub
+falas: pub fe
+mgi-proddb1: pub
 mgi-pubfedb1: fe pub
 mgi-pubfedb2: fe pub
 mgi-botfedb1: fe pub
