@@ -295,7 +295,8 @@ def form (parms, pulldowns):
 		'''  <TD align="center">SchemaSpy: 
 			<a href="http://firien.informatics.jax.org/usrlocalmgi/live/schemaSpy/mgd/" target="_blank">mgd</a> | 
 			<a href="http://firien.informatics.jax.org/usrlocalmgi/live/schemaSpy/fe/" target="_blank">fe</a> | 
-			<a href="http://firien.informatics.jax.org/usrlocalmgi/live/schemaSpy/snp/" target="_blank">snp</a></TD>''',
+			<a href="http://firien.informatics.jax.org/usrlocalmgi/live/schemaSpy/snp/" target="_blank">snp</a> | 
+			<a href="http://firien.informatics.jax.org/usrlocalmgi/live/schemaSpy/radar/" target="_blank">radar</a></TD>''',
 		'  <TD align=center> <I>Example: select * from mrk_marker ' + \
 			'limit 15</I><BR>',
 		'  <TR><TD colspan=3 align=center>',
