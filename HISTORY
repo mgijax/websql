@@ -1,3 +1,9 @@
+TAG: websql-6-0-1-3
+DATE: 11/02/2015
+STAFF: jsb
+CHANGES:
+1) fixed alignment of header elements, added links to SchemaSpy
+
 TAG: websql-6-0-1-2
 DATE: 11/02/2015
 STAFF: jsb
