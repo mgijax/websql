@@ -277,6 +277,9 @@ def form (parms, pulldowns):
 		'<INPUT TYPE=reset VALUE="Reset this Page">',
 		"<INPUT TYPE=button onClick='window.location.href=%s' VALUE='Start Over'>"\
 			% ('"%s"' % script),
+		'<INPUT TYPE=hidden NAME=origdbms VALUE=%s>' % dbms,
+		'<INPUT TYPE=hidden NAME=origserver VALUE=%s>' % server,
+		'<INPUT TYPE=hidden NAME=origdatabase VALUE=%s>' % database,
 		'<TABLE BORDER=0 WIDTH=90%><TR>',
 		'  <TD align=center>Server: %s' % pulldowns.server (dbms,
 			server),
@@ -287,15 +290,15 @@ def form (parms, pulldowns):
 		'    <OPTION VALUE="tab">Tab-delimited',
 		'    <OPTION VALUE="text">Text',
 		'    </SELECT>',
-		'</TABLE>',
-		'<INPUT TYPE=hidden NAME=origdbms VALUE=%s>' % dbms,
-		'<INPUT TYPE=hidden NAME=origserver VALUE=%s>' % server,
-		'<INPUT TYPE=hidden NAME=origdatabase VALUE=%s>' % database,
-		'<TABLE BORDER=0 WIDTH=90%><TR>',
-		'  <TD align=left> SQL (separate commands by ||):',
-		'  <TD align=right> <I>Example: select * from mrk_marker ' + \
+		'  </TR><TR>',
+		'  <TD align=center> SQL (separate commands by ||):',
+		'''  <TD align="center">SchemaSpy: 
+			<a href="http://firien.informatics.jax.org/usrlocalmgi/live/schemaSpy/mgd/" target="_blank">mgd</a> | 
+			<a href="http://firien.informatics.jax.org/usrlocalmgi/live/schemaSpy/fe/" target="_blank">fe</a> | 
+			<a href="http://firien.informatics.jax.org/usrlocalmgi/live/schemaSpy/snp/" target="_blank">snp</a></TD>''',
+		'  <TD align=center> <I>Example: select * from mrk_marker ' + \
 			'limit 15</I><BR>',
-		'  <TR><TD colspan=2 align=center>',
+		'  <TR><TD colspan=3 align=center>',
 		'    <TEXTAREA NAME=sql rows=%s cols=%s>%s</TEXTAREA>' % \
 			(config.lookup ('HEIGHT'), config.lookup ('WIDTH'),
 			sql),
