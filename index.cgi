@@ -19,7 +19,7 @@ import db
 import time
 import dbManager
 
-VERSION = '1.1'
+VERSION = '1.2'
 
 FORMAT = None
 HTML = 1	# values for FORMAT:
@@ -268,7 +268,7 @@ class Traceback:
 
 def form (parms, pulldowns):
 	sql = parms ['sql']
-	dbms = parms['DBMS1']
+	dbms = 'postgres'
 	server = parms ['server']
 	database = parms ['database']
 	script = os.path.basename (os.environ['SCRIPT_NAME'])
@@ -293,9 +293,7 @@ def form (parms, pulldowns):
 		'<INPUT TYPE=hidden NAME=origdatabase VALUE=%s>' % database,
 		'<TABLE BORDER=0 WIDTH=90%><TR>',
 		'  <TD align=left> SQL (separate commands by ||):',
-		'  <TD align=right> <I>Sybase Example: set rowcount 15 || ' + \
-			'select * from MRK_Marker</I><BR>',
-		'  <I>Postgres Example: select * from mrk_marker ' + \
+		'  <TD align=right> <I>Example: select * from mrk_marker ' + \
 			'limit 15</I><BR>',
 		'  <TR><TD colspan=2 align=center>',
 		'    <TEXTAREA NAME=sql rows=%s cols=%s>%s</TEXTAREA>' % \
@@ -307,18 +305,9 @@ def form (parms, pulldowns):
 	return string.join (lines, '\n')
 	
 def results (parms):
-	dbms = parms['DBMS1']
+	dbms = 'postgres'
 
-	if dbms == 'sybase':
-		db.set_sqlLogin (config.lookup('SYBASE_USER'),
-			config.lookup('SYBASE_PASSWORD'),
-			parms['server'], parms['database'])
-		db.useOneConnection(1)
-	elif dbms == 'mysql':
-		dbm = dbManager.mysqlManager (parms['server'],
-			parms['database'], config.lookup('MYSQL_USER'),
-			config.lookup('MYSQL_PASSWORD') )
-	elif dbms == 'postgres':
+	if dbms == 'postgres':
 		dbm = dbManager.postgresManager (parms['server'],
 			parms['database'], config.lookup('POSTGRES_USER'),
 			config.lookup('POSTGRES_PASSWORD') )
@@ -331,8 +320,7 @@ def results (parms):
 	else:
 		list.append ('')
 
-	list.append ('Results from %s : %s..%s' % (parms['DBMS1'],
-		parms['server'], parms['database']))
+	list.append ('Results from %s..%s' % (parms['server'], parms['database']))
 
 	queries = string.split (parms['sql'], '||')
 	if len(queries) == 1 and queries[0] == '':
@@ -356,18 +344,12 @@ def results (parms):
 
 		resetTime()
 
-		if dbms == 'sybase':
-			results = db.sql (query, 'auto')
-			count = len(results)
-			tbl = Table(query, results)
-
-		else:	# postgres or mysql
-			columns, rows = dbm.execute (query)
-			if rows:
-				count = len(rows)
-			else:
-				count = 0
-			tbl = MP_Table(columns, rows)
+		columns, rows = dbm.execute (query)
+		if rows:
+			count = len(rows)
+		else:
+			count = 0
+		tbl = MP_Table(columns, rows)
 
 		stats = '%d rows returned, %4.3f seconds' % (count,
 				elapsedTime())
@@ -421,8 +403,7 @@ if __name__ == '__main__':
 	servermap = ServerMap.ServerMap (config.lookup ('MAPFILE'))
 	pulldowns = Pulldowns.Pulldowns (servermap)
 
-	if servermap.default_dbms() != '':
-		parms['DBMS1'] = servermap.default_dbms()
+	parms['DBMS1'] = 'postgres'
 	if servermap.default_server() != '':
 		parms['server'] = servermap.default_server()
 	if servermap.default_database() != '':

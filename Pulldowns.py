@@ -53,7 +53,7 @@ class Pulldowns:
 		if selected_server is None:
 			selected_server = servers[0]
 
-		list = [ '<SELECT NAME=server onChange="do_server(DBMS1.options[DBMS1.selectedIndex].text, server.options[server.selectedIndex].text)">' ]
+		list = [ '<SELECT NAME=server onChange="do_server(server.options[server.selectedIndex].text)">' ]
 		servers = self.data[selected_dbms].keys()
 		servers.sort()
 		for srv in servers:
@@ -93,7 +93,7 @@ class Pulldowns:
 			' }',
 			'}',
 			'',
-			'function do_server (dbms, server) {',
+			'function do_server (server) {',
 			' // server is a string identifying which server',
 			' var dbs = document.forms[0].database',
 			]
@@ -102,38 +102,16 @@ class Pulldowns:
 		    for server in self.data[dbms].keys():
 			databases = self.data[dbms][server].keys()
 			databases.sort()
-			js.append (' if ((dbms == "%s") && (server=="%s")) {' % (dbms, server))
+			js.append (' if (server=="%s") {' % server)
 			js.append ('  populate (dbs, new Array ("%s"))' % \
 				string.join (databases, '","'))
 			js.append (' }')
 		js.append ('}')
 
 		js = js + [
-			'function do_dbms (dbms) {',
-			' // dbms is a string identifying which RDBMS',
-			' var servers = document.forms[0].server',
-			]
-		for dbms in self.data.keys():
-			servers = self.data[dbms].keys()
-			servers.sort()
-			js.append (' if (dbms=="%s") { ' % dbms)
-			js.append ('  populate (servers, new Array ("%s"))' %\
-				'","'.join (servers))
-			js.append (' }')
-		js.append (' do_server(document.forms[0].DBMS1.options[document.forms[0].DBMS1.selectedIndex].text, document.forms[0].server.options[document.forms[0].server.selectedIndex].text);')
-		js.append ('}')
-
-		js = js + [
 			'function doReset () {',
-			'  do_dbms (document.forms[0].origdbms.value);',
 			'  do_server (document.forms[0].origdbms.value, document.forms[0].origserver.value)',
 			'  set (databases, document.forms[0].origdatabase.value)',
-			'}',
-			'function browse() {',
-			'var r = "rdbms=" + document.forms[0].DBMS1.options[document.forms[0].DBMS1.selectedIndex].text;',
-			'var d = "&database=" + document.forms[0].database.options[document.forms[0].database.selectedIndex].text;',
-			'var s = "&server=" + document.forms[0].server.options[document.forms[0].server.selectedIndex].text;',
-			'window.open ("browse.cgi?" + r + d + s);',
 			'}',
 			]
 		js.append ('</SCRIPT>')
