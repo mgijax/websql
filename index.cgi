@@ -15,7 +15,6 @@ if '.' not in sys.path:
 import config
 import Pulldowns
 import ServerMap
-import db
 import time
 import dbManager
 
