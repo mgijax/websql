@@ -9,11 +9,10 @@
 
 [postgres]
 cardolan: fe pub
-mgi-testdb3: export fe_dev fe_mover fe_stable pub_dev pub_stable scrumbob sc
-mgi-testdb4: export fe_dev fe_mover fe_stable pub_dev pub_stable
-rohan: *export fe pub
-bhmgidevdb01: prod
-mtdoom: pub fe
-bhmgidb05ld: pub fe
+mgi-testdb3: export export2 fe_dev fe_mover fe_stable pub_dev pub_stable sc scrumbob
+mgi-testdb4: fe_dev fe_mover fe_pf fe_stable lec pub pub_dev pub_stable scrumdog
+bhmgidevdb01: dbm *prod prod_test scrumdog
+bhmgidb05ld: fe pub
 bhmgidb02: pub
 mgi-fedb1: fe pub
+
