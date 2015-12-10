@@ -16,7 +16,7 @@ bhmgidb05ld: fe pub
 bhmgidb02: pub
 mgi-fedb1: fe pub
 bhmgidb01: prod
-falas: fe pub
+bhmgidb03lp: fe pub
 mgi-proddb1: pub
 mgi-pubfedb1: fe pub
 mgi-pubfedb2: fe pub
