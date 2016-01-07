@@ -18,7 +18,7 @@ import ServerMap
 import time
 import dbManager
 
-VERSION = '1.2'
+VERSION = '1.21'
 
 FORMAT = None
 HTML = 1	# values for FORMAT:
@@ -172,7 +172,7 @@ class Table:
 		return string.join (lines, '\n')
 
 	def text (self):
-		if len(self.rows) == 0:
+		if (not self.rows) or (len(self.rows) == 0):
 			return ''
 
 		headers = [ 'Row #' ]
@@ -307,6 +307,29 @@ def form (parms, pulldowns):
 		]
 	return string.join (lines, '\n')
 	
+def jsUpdate(i, total):
+	s = '''<script>document.getElementById("status").innerHTML="Working on command %d of %d...";</script>''' % (i, total)
+	return s
+
+def jsFinal():
+	s = '''<script>document.getElementById("status").innerHTML="Finished commands";</script>'''
+	return s
+
+def jsTable(timings):
+	total = 0
+	list = []
+	list.append('<B>Timings:</B><br/>Shorter timings have lighter shades; click the query number to go down to its results.<P>')
+	for (i, timing) in timings:
+		total = total + timing
+
+	list.append(legend(total))
+
+	for (i, timing) in timings:
+		list.append(bar(i, timing, total))
+		list.append('<br/>')
+	s = '''<script>document.getElementById("status").innerHTML='%s';</script>''' % ' '.join(list)
+	return s
+
 def results (parms):
 	dbms = 'postgres'
 
@@ -323,14 +346,29 @@ def results (parms):
 	else:
 		list.append ('')
 
-	list.append ('Results from %s..%s' % (parms['server'], parms['database']))
+	if FORMAT == HTML:
+		list.append ('Results from %s..%s' % (parms['server'], parms['database']))
+		list.append('<hr/>')
+		list.append('<div id="status">Working on...</div>')
+	else:
+		list.append ('Results from %s..%s' % (parms['server'], parms['database']))
 
 	queries = string.split (parms['sql'], '||')
 	if len(queries) == 1 and queries[0] == '':
 		queries = []
 
+	timings = []
+
+    	print '\n'.join(list)
+	sys.stdout.flush()
+	list = []
+
 	for query in queries:
-	    i = i + 1
+	    i = i + 1 
+	    if FORMAT == HTML:
+		    print jsUpdate(i, len(queries))
+		    sys.stdout.flush()
+
 	    try:
 		title = 'Result Set %d' % i
 		half = (78 - len(title)) / 2
@@ -338,7 +376,7 @@ def results (parms):
 		cmds = [ 'SQL command:' ] + string.split(query.strip(), '\n')
 
 		if FORMAT == HTML:
-			list.append ('<HR>%s<BR>' % title)
+			list.append ('<HR><a name="%d">%s</a> (back to <a href="#top">top</a>)<BR>' % (i,title))
 			list.append ('<PRE>%s</PRE>' % '\n'.join(cmds))
 		else:
 			list.append ('=' * half + title + '=' * (78 - half))
@@ -354,8 +392,9 @@ def results (parms):
 			count = 0
 		tbl = MP_Table(columns, rows)
 
-		stats = '%d rows returned, %4.3f seconds' % (count,
-				elapsedTime())
+		t = elapsedTime()
+		stats = '%d rows returned, %4.3f seconds' % (count, t)
+		timings.append ( (i, t) )
 
 		if FORMAT == HTML:
 			list.append ('<FONT SIZE="-1">%s</FONT><P>' % stats)
@@ -370,6 +409,10 @@ def results (parms):
 			list.append (stats)
 			list.append ('')
 			list.append (tbl.text())
+
+	    	print '\n'.join(list)
+		sys.stdout.flush()
+		list = []
 	    except:
 		tb = Traceback (traceback.extract_tb (sys.exc_traceback),
 					sys.exc_type, sys.exc_value)
@@ -380,14 +423,50 @@ def results (parms):
 
 		return '\n'.join (list)
 
+	if FORMAT == HTML:
+		print jsFinal()
+		print jsTable(timings)
+
 	return '\n'.join (list)
+
+maxWidth = 1000			# pixels for graph width
+
+def legend(total):
+	divs = []
+	divs.append('<div style="width:25px; border-right: solid thin black; text-align: right; display: inline-block;">&nbsp;</div>')
+	width = ((maxWidth - 5) / 8.0) - 5
+	for i in range(1,9):
+		t = i * total / 8.0
+		divs.append('<div style="width:%dpx; border-bottom: solid thin black; border-right: solid thin black; text-align: right; display: inline-block; padding-right: 5px;">%0.2f sec</div>' % (width, t))
+	divs.insert(0, '<div>')
+	divs.append('</div>')
+	return ''.join(divs)
+
+def pixels(subset, total, maxWidth):
+	return int(1.0 * subset / total * maxWidth)
+
+sofar = 0
+def bar (i, timing, total):
+	global sofar
+
+	green = hex(255 - int((timing / total) * 255))
+	if green == '0x0':
+		green = '0xff'
+
+	color = '#00%s00' % green[-2:]
+
+	s = '<div style="width: %dpx; display: inline-block; text-align: right; padding-right: 5px"><a href="#%d">%s</a></div>' + \
+		'<div style="display:inline-block; background-color: %s; width: %dpx">&nbsp;</div>'
+	s = s % (20 + pixels(sofar, total, maxWidth), i, i, color,
+		pixels(timing, total, maxWidth))
+	sofar = sofar + timing
+	return s 
 
 def process_parms ():
 	global parms, FORMAT
 	fs = cgi.FieldStorage()
 	for k in fs.keys():
 		parms[k] = fs[k].value
-		sys.stderr.write ('%s : %s\n' % (k, parms[k]))
 
 	if parms['format'] == 'html':
 		FORMAT = HTML
@@ -398,7 +477,7 @@ def process_parms ():
 	return
 
 title = 'websql %s' % VERSION
-header = '<HTML><HEAD><TITLE>%s</TITLE></HEAD><BODY><H3>%s</H3>' % \
+header = '<HTML><HEAD><TITLE>%s</TITLE></HEAD><BODY><H3><a name="top">%s</a></H3>' % \
 	(title, title)
 footer = '</BODY></HTML>'
 
