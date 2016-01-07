@@ -349,7 +349,7 @@ def results (parms):
 	if FORMAT == HTML:
 		list.append ('Results from %s..%s' % (parms['server'], parms['database']))
 		list.append('<hr/>')
-		list.append('<div id="status">Working on...</div>')
+		list.append('<div id="status"></div>')
 	else:
 		list.append ('Results from %s..%s' % (parms['server'], parms['database']))
 
@@ -423,7 +423,7 @@ def results (parms):
 
 		return '\n'.join (list)
 
-	if FORMAT == HTML:
+	if (FORMAT == HTML) and (queries):
 		print jsFinal()
 		print jsTable(timings)
 
@@ -437,7 +437,7 @@ def legend(total):
 	width = ((maxWidth - 5) / 8.0) - 5
 	for i in range(1,9):
 		t = i * total / 8.0
-		divs.append('<div style="width:%dpx; border-bottom: solid thin black; border-right: solid thin black; text-align: right; display: inline-block; padding-right: 5px;">%0.2f sec</div>' % (width, t))
+		divs.append('<div style="width:%dpx; border-bottom: solid thin black; border-right: solid thin black; text-align: right; display: inline-block; padding-right: 5px;">%0.3f sec</div>' % (width, t))
 	divs.insert(0, '<div>')
 	divs.append('</div>')
 	return ''.join(divs)
