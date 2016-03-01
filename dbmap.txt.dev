@@ -13,6 +13,5 @@ mgi-testdb3: export export2 fe_dev fe_mover fe_stable pub_dev pub_stable sc scru
 mgi-testdb4: fe_dev fe_mover fe_pf fe_stable lec pub pub_dev pub_stable scrumdog
 bhmgidevdb01: dbm *prod prod_test scrumdog
 bhmgidb07ld: fe pub
-bhmgidb02: pub
 mgi-fedb1: fe pub
 
