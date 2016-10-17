@@ -12,7 +12,7 @@ cardolan: fe pub
 mgi-testdb3: export2 fe_dev fe_mover fe_stable pub_dev pub_stable sc scrumbob scrumbob_test
 mgi-testdb4: fe_dev fe_mover fe_pf fe_stable lec pub pub_dev pub_stable scrumdog
 bhmgidevdb01: dbm *prod prod_test scrumdog
-bhmgidb06ld: bluebob bluebobfe redbob redbobfe 
+bhmgidb06ld: bluebob bluebobfe redbob redbobfe redbobpwi
 bhmgidb07ld: fe pub
 mgi-fedb1: fe pub
 bhmgidb01: prod
