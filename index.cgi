@@ -8,6 +8,7 @@ import sys
 import types
 import string
 import traceback
+import urllib
 
 if '.' not in sys.path:
 	sys.path.insert (0, '.')
@@ -327,6 +328,9 @@ def jsTable(timings):
 	for (i, timing) in timings:
 		list.append(bar(i, timing, total))
 		list.append('<br/>')
+
+	list.append('Link to <a href="%s" target="_blank">current set of results</a> (can copy &amp; paste URL)<br/>' % makeLink())
+
 	s = '''<script>document.getElementById("status").innerHTML='%s';</script>''' % ' '.join(list)
 	return s
 
@@ -475,6 +479,19 @@ def process_parms ():
 	elif parms['format'] == 'text':
 		FORMAT = TEXT
 	return
+
+def makeLink():
+	# make a link to the current page, including the SQL command(s)
+
+	url = 'http://%s%s' % (os.environ['HTTP_HOST'], os.environ['REQUEST_URI'])
+	if not url.endswith('index.cgi'):
+		url = os.path.join(url, 'index.cgi')
+
+	url = '%s?server=%s&database=%s&format=%s&sql=' % (url,
+		parms['server'], parms['database'], parms['format'])
+
+	url = url + urllib.quote(parms['sql'])
+	return url 
 
 title = 'websql %s' % VERSION
 header = '<HTML><HEAD><TITLE>%s</TITLE></HEAD><BODY><H3><a name="top">%s</a></H3>' % \
