@@ -510,14 +510,17 @@ if __name__ == '__main__':
 
 	process_parms()
 
-	noDriver = None
+	errorMsg = None
 	if (parms['DBMS1'] == 'postgres') and (not dbManager.LOADED_POSTGRES_DRIVER):
-		noDriver = 'Could not find the psycopg2 module for Postgres'
+		errorMsg = 'Could not find the psycopg2 module for Postgres'
 
-	if noDriver:
+	if not servermap.valid('postgres', parms['server'], parms['database']):
+		errorMsg = 'The given server and database are not currently recognized (%s..%s)' % (parms['server'], parms['database'])
+
+	if errorMsg:
 		print 'Content-type: text/html\n'
 		print header
-		print 'Failed: "%s"' % noDriver
+		print 'Failed: "%s"' % errorMsg
 		print footer
 		sys.exit(0)
 
