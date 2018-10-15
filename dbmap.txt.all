@@ -14,12 +14,16 @@ bhmgidb06ld: bluebob bluebobfe redbob redbobfe redbobpwi
 bhmgidb03lt: fe_sc sc
 bhmgidevdb01: dbm *prod prod_test test
 bhmgidb07ld: fe pub
-bhmgidb01lt: fe
 mgi-fedb1: fe
+bhmgidb01lt: fe
 bhmgidb01: prod
 bhmgidb07lp: fe pub
 mgi-pubfedb1: fe
 mgi-pubfedb2: fe
+bhmgipubdb01lp: fe
+bhmgipubdb02lp: fe
 mgi-botfedb1: fe
 mgi-botfedb2: fe
+bhmgirobdb01lp: fe
+bhmgirobdb02lp: fe
 mgi-adhoc: mgd mgd_load
