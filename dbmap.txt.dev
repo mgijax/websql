@@ -14,5 +14,4 @@ bhmgidb06ld: bluebob bluebobfe redbob redbobfe redbobpwi
 bhmgidb03lt: fe_sc sc
 bhmgidevdb01: dbm *prod prod_test test
 bhmgidb07ld: fe pub
-mgi-fedb1: fe
 bhmgidb01lt: fe
