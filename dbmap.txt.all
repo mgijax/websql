@@ -10,8 +10,9 @@
 [postgres]
 mgi-testdb3: fe_dev fe_mover fe_stable pub_dev pub_stable sc scrumbob scrumbob_test
 mgi-testdb4: fe_dev fe_lec fe_stable lec pub_dev scrumdog
-bhmgidb06ld: bluebob bluebobfe redbob redbobfe redbobpwi
 bhmgidb03lt: fe_sc sc
+bhmgidb06ld: bluebob bluebobfe redbob redbobfe redbobpwi
+bhmgidb09lt: sc scrumbob scrumbob_test
 bhmgidevdb01: dbm *prod prod_test test
 bhmgidb07ld: fe pub
 bhmgidb01lt: fe
