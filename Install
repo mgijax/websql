@@ -37,36 +37,42 @@ do
 done
 exec 0<&4
 
-# protect files from world access
+# remove the python link before chmod, if there already
+if [ -h python ]; then
+	rm python
+fi
+
+# protect files from world write access
 
 chmod o-rwx *
+chmod o+rx *
 
 # set up the mapping file sym link, assuming that this is during curation
 # hours when all databases should be active
 
+if [ -h $MAPFILE ]; then
+        rm $MAPFILE
+fi
 ln -s $MAPFILE_ALL $MAPFILE
 
 # make Python link
 
-if [ -h python ]; then
-	rm python
-fi
 echo "Linking to python"
 ln -s $PYTHON python
 
 echo $DBDIR > library.path
-chmod 660 library.path
+chmod 664 library.path
 chgrp $GROUP library.path
 
 # compile python libraries and make sure they're readable
 
 echo "Compiling libraries"
-rm *pyc
 $PYTHON -c 'import compileall; compileall.compile_dir(".")'
-$PYTHON -c 'import config'
 
 # set permissions for group to read & execute
 
 echo "Setting permissions"
-chgrp $GROUP *pyc *cgi $MAPFILE_ALL $MAPFILE_DEV $CONFIGURATION
-chmod 750 setMapfile *pyc *cgi $MAPFILE_ALL $MAPFILE_DEV
+chgrp $GROUP *cgi $MAPFILE_ALL $MAPFILE_DEV $CONFIGURATION
+chmod 755 setMapfile *cgi $MAPFILE_ALL $MAPFILE_DEV *py
+
+echo "Done"
