@@ -30,6 +30,8 @@ HTML = 1        # values for FORMAT:
 TAB = 2
 TEXT = 3
 
+TABLE_COUNT = 0
+
 config = Configuration.get_Configuration('Configuration')
 
 # default to the production mirror
@@ -126,36 +128,43 @@ class Table:
                 return
 
         def html (self):
+                global TABLE_COUNT
+
                 if (not self.rows) or (len(self.rows) == 0):
                         return ''
 
-                lines = [ '<TABLE border=1>' ]
+                TABLE_COUNT = TABLE_COUNT + 1
+                lines = [ '<TABLE id="resultsTable%d" border="1">' % TABLE_COUNT ]
 
-                s = '<TR><TH>Row #'
+                lines.append('<thead>')
+
+                s = '<TR><TH>Row #</TH>'
                 for col in self.cols:
-                        s = s + '<TH>%s' % col
-                lines.append (s)
+                        s = s + '<TH>%s</TH>' % col
+                lines.append (s + '</TR>')
+
+                lines.append('</thead><tbody>')
 
                 ct = 0
                 for row in self.rows:
                         s = '<TR>'
                         ct = ct + 1
-                        s = s + '<TD>%d' % ct
+                        s = s + '<TD>%d</TD>' % ct
                         for col in range (0, len(self.cols)):
                                 val_type = type (row[col])
                                 if val_type == int:
-                                        s = s + '<TD align=right>%d' % \
+                                        s = s + '<TD align=right>%d</TD>' % \
                                                 row[col]
                                 elif val_type == float:
-                                        s = s + '<TD align=right>%f' % \
+                                        s = s + '<TD align=right>%f</TD>' % \
                                                 row[col]
                                 elif val_type == type(None):
-                                        s = s + '<TD>null'
+                                        s = s + '<TD>null</TD>'
                                 else:
-                                        s = s + '<TD>%s' % \
+                                        s = s + '<TD>%s</TD>' % \
                                                 cgi.escape(str(row[col]))
-                        lines.append (s)
-                lines.append ('</TABLE>')
+                        lines.append (s + '</TR>')
+                lines.append ('</tbody></TABLE>')
                 return '\n'.join (lines)
 
         def tab (self):
@@ -406,7 +415,7 @@ def results (parms):
                 timings.append ( (i, t) )
 
                 if FORMAT == HTML:
-                        myList.append ('<FONT SIZE="-1">%s</FONT><P>' % stats)
+                        myList.append ('<FONT SIZE="-1">%s</FONT> <span id="makeSortable%d" onClick="makeSortable(%d)" class="shownButton">&nbsp;Show Enhanced Table&nbsp;</span><P>' % (stats, i, i))
                         myList.append (tbl.html())
 
                 elif FORMAT == TAB:
@@ -499,9 +508,25 @@ def makeLink():
         return url 
 
 title = 'websql %s' % VERSION
-header = '<HTML><HEAD><TITLE>%s</TITLE></HEAD><BODY><H3><a name="top">%s</a></H3>' % \
+header = '''<HTML><HEAD><TITLE>%s</TITLE></HEAD><BODY><H3><a name="top">%s</a></H3>
+<style>
+.hiddenButton { display : none; }
+.shownButton { display : inline; border: 1px solid black; font-family: Arial; font-size: .85em;
+        background-color: lightyellow; color: black; }
+</style>
+''' % \
         (title, title)
-footer = '</BODY></HTML>'
+footer = '''
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script>
+        var makeSortable = function(id) {
+                $('#resultsTable' + id).DataTable( {paging: false} );
+                $('#makeSortable' + id).removeClass('shownButton').addClass('hiddenButton');
+        };
+        </script>
+        </BODY></HTML>'''
 
 if __name__ == '__main__':
         servermap = ServerMap.ServerMap (config.lookup ('MAPFILE'))
