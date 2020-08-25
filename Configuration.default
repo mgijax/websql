@@ -1,5 +1,5 @@
 # full path to the python interpreter
-PYTHON		/usr/local/bin/python
+PYTHON          /opt/python3.7/bin/python3
 
 # Postgres username and password
 POSTGRES_USER	mgd_public
