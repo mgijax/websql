@@ -5,6 +5,7 @@
 import os
 import cgi
 import sys
+import html
 import types
 import traceback
 import urllib.request, urllib.parse, urllib.error
@@ -238,22 +239,15 @@ class Traceback:
                 if self.tracebackType:
                         needP = 1
                         lines.append ("<B>Exception type:</B> %s<BR>" % \
-                                self.tracebackType)
+                                html.escape(str(self.tracebackType)))
                 if self.tracebackValue:
                         needP = 1
-                        lines.append ("<B>Exception value:</B> %s<BR>" % \
-                                self.tracebackValue)
+                        lines.append ("<B>Exception value:</B><BR/><PRE>%s</PRE>" % \
+                                str(self.tracebackValue).replace('\\n', '<br/>', 1000))
 
                 if needP == 1:
                         lines.append ("<P>")
 
-                lines = lines + [
-                        '<TABLE border=1>',
-                        '<TR><TH>File<TH>Line #<TH>Function<TH>Line'
-                        ]
-                for entry in self.traceback:
-                        lines.append ('<TR><TD>%s<TD>%s<TD>%s<TD>%s' % entry)
-                lines.append ('</TABLE>')
                 return '\n'.join (lines)
 
         def text (self):
@@ -264,20 +258,14 @@ class Traceback:
                 if self.tracebackType:
                         needP = 1
                         lines.append ("Exception type: %s" % \
-                                self.tracebackType)
+                                str(self.tracebackType))
                 if self.tracebackValue:
                         needP = 1
                         lines.append ("Exception value: %s" % \
-                                self.tracebackValue)
+                                str(self.tracebackValue))
 
                 if needP == 1:
                         lines.append ("\n")
-
-                for (file, line, fn, text) in self.traceback:
-                        lines.append ('File:     %s' % file)
-                        lines.append ('Line #:   %d' % line)
-                        lines.append ('Function: %s' % fn)
-                        lines.append ('Line:     %s\n' % text)
                 return '\n'.join (lines)
 
 def form (parms, pulldowns):
