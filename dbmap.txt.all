@@ -8,11 +8,11 @@
 # after one of these dividers will be mapped to that particular RDBMS
 
 [postgres]
-mgi-testdb4: fe_dev fe_lec fe_stable lec pub_dev scrumdog
-bhmgidb03lt: fe_sc sc
-bhmgidb06ld: bluebob bluebobfe redbob redbobfe redbobpwi
-bhmgidb09lt: sc scrumbob scrumbob_test
-bhmgidevdb01: dbm *prod prod_test test
+bhmgidb03lt: sc
+bhmgidb06ld: bluebob bluebobfe
+bhmgidb09lt: scrumbob scrumbob_test
+mgi-testdb4: fe_dev fe_lec fe_stable jak lec pub_dev scrumdog
+bhmgidevdb01: dbm *prod prod_test
 bhmgidb07ld: fe pub
 bhmgidb01lt: fe
 bhmgidb01: prod
