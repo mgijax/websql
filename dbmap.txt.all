@@ -9,7 +9,7 @@
 
 [postgres]
 bhmgidb03lt: sc
-bhmgidb06ld: bluebob bluebobfe
+bhmgidb06ld: jer_fe jer_prod pf_fe pf_prod
 bhmgidb09lt: scrumbob scrumbob_test
 mgi-testdb4: fe_dev fe_lec fe_stable jak lec pub_dev scrumdog
 bhmgidevdb01: dbm *prod prod_test
