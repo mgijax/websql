@@ -1,3 +1,10 @@
+TAG: websql-6-0-23-1
+DATE: 03/29/2024
+STAFF: lec
+CHANGES:
+1) dbmap.txt.all/dbmap.txt.dev: Updated database list
+removed "dbm" and "jak"
+
 TAG: websql-6-0-22-1
 DATE: 12/16/2022
 STAFF: jer
