@@ -19,8 +19,6 @@ exec < $CONFIGURATION
 while read name value junk
 do
 	case "$name" in
-		PYTHON)
-			PYTHON=$value;;
 		GROUP)
 			GROUP=$value;;
 		DBDIR)

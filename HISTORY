@@ -1,3 +1,9 @@
+TAG: websql-6-0-23-4
+DATE: 05/23/2024
+STAFF: lec
+CHANGES:
+remove PYTHON and use mgiconfig
+
 TAG: websql-6-0-23-3
 DATE: 05/15/2024
 STAFF: lec
