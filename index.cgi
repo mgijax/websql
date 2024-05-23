@@ -163,7 +163,7 @@ class Table:
                                         s = s + '<TD>null</TD>'
                                 else:
                                         s = s + '<TD>%s</TD>' % \
-                                                cgi.escape(str(row[col]))
+                                                html.escape(str(row[col]))
                         lines.append (s + '</TR>')
                 lines.append ('</tbody></TABLE>')
                 return '\n'.join (lines)
