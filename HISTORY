@@ -1,3 +1,4 @@
+TAG: websql-6-0-24-5
 TAG: websql-6-0-24-4
 TAG: websql-6-0-24-3
 TAG: websql-6-0-24-2
@@ -7,6 +8,7 @@ CHANGES:
 moved 'lec' from mgi-testdb4 to bhmgidb03lt
 rename 'scrumdog' -> prod_dev
 added 'liangh_prod'
+added 'emersj_prod'
 
 TAG: websql-6-0-24-1
 DATE: 09/11/2024
