@@ -11,7 +11,7 @@
 bhmgidb03lt: prod lec
 bhmgidb06ld: jer_fe jer_pub jer_prod pf_fe pf_prod liangh_prod
 mgi-testdb4: prod_dev pub_dev fe_dev emersj_prod
-bhmgidevdb01: prod prod_test
+bhmgidevdb01: *prod prod_test
 bhmgidb07ld: fe pub
 bhmgidb01lt: fe
 bhmgidb01: prod
