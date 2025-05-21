@@ -1,3 +1,11 @@
+TAG: websql-6-0-25-1
+DATE: 05/21/2025
+STAFF: lec
+CHANGES:
+changed bhmgidb03lt
+        modified:   dbmap.txt.all
+        modified:   dbmap.txt.dev
+
 TAG: websql-6-0-24-6
 TAG: websql-6-0-24-5
 TAG: websql-6-0-24-4
