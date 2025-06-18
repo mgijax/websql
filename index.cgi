@@ -24,7 +24,7 @@ import ServerMap
 import time
 import dbManager
 
-VERSION = '1.22'
+VERSION = '6-0-25-4'
 
 FORMAT = None
 HTML = 1        # values for FORMAT:
