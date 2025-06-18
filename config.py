@@ -21,7 +21,7 @@ try:
 except:
         pass
 
-import regex
+import re
 
 def find_path (
         s = 'Configuration',    # string pathname for which we're looking
@@ -55,8 +55,7 @@ CONFIG = {}                                     # configuration info
 def readConfigFile (
         source          # pathname to config file to read
         ):
-        # Purpose: read the configuration file at 'source', parse it,
-        #       store values in a dictionary
+        # Purpose: read the configuration file at 'source', parse it, store values in a dictionary
         # Returns: the dictionary parsed from 'source'
         # Assumes: 'source' exists
         # Effects: reads from the file system
@@ -66,17 +65,19 @@ def readConfigFile (
         lines = fp.readlines ()
         fp.close ()
 
-        ignore_line = regex.compile ('[ \t]*#')         # comment line
-        data_line = regex.compile ('[ \t]*'
-                                '\([^ \t]+\)'
-                                '[ \t]*\(.*\)') 
+        ignore_line = re.compile (r'[ \t]*#')         # comment line
+        data_line = re.compile (r'[ \t]*' 
+                        r'\([^ \t]+\)' 
+                        r'[ \t]*\(.*\)') 
         dict = {}
 
         for line in lines:
-                if ignore_line.match (line) == -1:
-                        if data_line.match (line) != -1:
-                                (parameter, value) = data_line.group (1,2)
-                                dict [parameter.upper()] = value
+                if ignore_line.match (line) == None:
+                        if data_line.match (line) != None:
+                            match = data_line.search(line)
+                            parameter = match.group(1)
+                            value = match.group(2)
+                            dict [parameter.upper()] = value
         return dict
 
 
@@ -84,8 +85,7 @@ def lookup (
         parameter       # string parameter name to look up
         ):
         # Purpose: lookup the value of the specified 'parameter'
-        # Returns: string parameter value, or None if that parameter does not
-        #       exist in the config file
+        # Returns: string parameter value, or None if that parameter does not exist in the config file
         # Assumes: nothing
         # Effects: nothing
         # Throws: nothing
